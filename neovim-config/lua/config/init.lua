@@ -1,17 +1,17 @@
 -- set vim options
-require("config.options")
+require("neovim-config.lua.config.options")
 
 -- Add LSP & Plugins before keymaps and autocmds as some
 -- of the keymaps and autocmd depend upon these plugins
 
 -- Setup & Config for LSP Server per language
-require("config.lsp")
+require("neovim-config.lua.config.lsp.init")
 
 -- load plugins
--- require("config.plugins")
+require("neovim-config.lua.config.plugins.init")
 
 -- load set vim keymaps
-require("config.keymaps")
+require("neovim-config.lua.config.keymaps")
 
 -- load set vim autocmds
-require("config.autocmds")
+require("neovim-config.lua.config.autocmds")
