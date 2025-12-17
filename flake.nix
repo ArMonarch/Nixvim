@@ -30,7 +30,10 @@
           lazy-nvim
         ];
         neovim-optPlugins = with stable-pkgs.vimPlugins; [
-          which-keys
+          tokyonight-nvim
+          catppuccin-nvim
+          rose-pine
+          gruvbox-material-nvim
         ];
 
         neovim-packages = stable-pkgs.runCommandLocal "neovim-packages" { } ''
@@ -41,6 +44,11 @@
           ${stable-pkgs.lib.concatMapStringsSep "\n" (
             plugin: "ln -vsfT ${plugin} $out/pack/${package-name}/start/${stable-pkgs.lib.getName plugin} "
           ) neovim-startPlugins}
+
+          # load optional plugins which lazy.nvim will load automatically
+          ${stable-pkgs.lib.concatMapStringsSep "\n" (
+            plugin: "ln -vsfT ${plugin} $out/pack/${package-name}/opt/${stable-pkgs.lib.getName plugin} "
+          ) neovim-optPlugins}
         '';
       in
       {
