@@ -6,3 +6,12 @@ require("config.options")
 
 -- Setup & Config for LSP Server per language
 require("config.lsp")
+
+-- load plugins
+-- require("config.plugins")
+
+-- load set vim keymaps
+require("config.keymaps")
+
+-- load set vim autocmds
+-- require("config.autocmds")
