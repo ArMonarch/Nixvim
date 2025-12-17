@@ -25,6 +25,7 @@
         stable-pkgs = import nixpkgs { inherit system; };
         unstable-pkgs = import nixpkgs-unstable { inherit system; };
 
+        neovim-transparent-theme = false;
         neovim-startPlugins = with stable-pkgs.vimPlugins; [
           plenary-nvim
           lazy-nvim
@@ -33,7 +34,10 @@
           tokyonight-nvim
           catppuccin-nvim
           rose-pine
-          gruvbox-material-nvim
+
+          which-key-nvim
+          smear-cursor-nvim
+          conform-nvim
         ];
 
         neovim-packages = stable-pkgs.runCommandLocal "neovim-packages" { } ''
@@ -42,12 +46,12 @@
 
           # necessary packages should be loaded at start i.e. mainly plugins manager and its helper package
           ${stable-pkgs.lib.concatMapStringsSep "\n" (
-            plugin: "ln -vsfT ${plugin} $out/pack/${package-name}/start/${stable-pkgs.lib.getName plugin} "
+            plugin: "ln -vsfT ${plugin} $out/pack/${package-name}/start/${stable-pkgs.lib.getName plugin}"
           ) neovim-startPlugins}
 
           # load optional plugins which lazy.nvim will load automatically
           ${stable-pkgs.lib.concatMapStringsSep "\n" (
-            plugin: "ln -vsfT ${plugin} $out/pack/${package-name}/opt/${stable-pkgs.lib.getName plugin} "
+            plugin: "ln -vsfT ${plugin} $out/pack/${package-name}/opt/${stable-pkgs.lib.getName plugin}"
           ) neovim-optPlugins}
         '';
       in
@@ -72,7 +76,12 @@
           };
           flags = {
             "-u" = "NORC";
-            "--cmd" = "set packpath^=${neovim-packages} | set runtimepath^=${neovim-packages}";
+            "--cmd" = ''
+              set packpath^=${neovim-packages} |
+              set runtimepath^=${neovim-packages} |
+              let g:neovim_plugins='${neovim-packages}' |
+              let g:neovim_transparent_theme='${builtins.toString neovim-transparent-theme}'
+            '';
           };
           flagSeparator = " ";
           passthru = {
