@@ -14,4 +14,4 @@ require("config.lsp")
 require("config.keymaps")
 
 -- load set vim autocmds
--- require("config.autocmds")
+require("config.autocmds")
