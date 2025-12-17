@@ -62,6 +62,8 @@
           exePath = nixpkgs.lib.getExe package;
           binName = builtins.baseNameOf exePath;
           runtimeInputs = with stable-pkgs; [
+
+            # LSP Servers Packages
             basedpyright
             lua-language-server
             marksman
@@ -70,6 +72,15 @@
             rust-analyzer
             typescript-language-server
             zls
+
+            # Formatters Packages
+            nixfmt-rfc-style
+            stylua
+            shfmt
+            ruff
+            rustfmt
+            prettierd
+
           ];
           env = {
             "NVIM_APPNAME" = "neovim";
