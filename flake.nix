@@ -34,6 +34,7 @@
           catppuccin-nvim
           rose-pine
 
+          blink-cmp
           conform-nvim
           lazydev-nvim
           mini-icons

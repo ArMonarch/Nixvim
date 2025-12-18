@@ -125,12 +125,27 @@ end, { desc = "Quickfix List" })
 map("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", remap = true })
 map("n", "<leader>|", "<C-W>v", { desc = "Split Window Right", remap = true })
 map("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
+
+-- Snacks toggle options keymap
 Snacks.toggle.zoom():map("<leader>wm"):map("<leader>uZ")
 Snacks.toggle.zen():map("<leader>uz")
 
+-- terminal keymaps
+map("n", "<leader>tt", function()
+	Snacks.terminal.toggle()
+end, { desc = "Toggle Terminal", remap = true })
+map("v", "<leader>tt", function()
+	Snacks.terminal.toggle()
+end, { desc = "Toggle Terminal", remap = true })
+map("n", "<leader>tT", function()
+	Snacks.terminal.toggle("exec fish", { cwd = vim.fn.expand("%:p:h") })
+end, { desc = "Toggle Scratch Terminal", remap = true })
+map("v", "<leader>tT", function()
+	Snacks.terminal.toggle("exec fish", { cwd = vim.fn.expand("%:p:h") })
+end, { desc = "Toggle Scratch Terminal", remap = true })
+
 -- folds keymaps
-map("n", "<leader>z", "za", { desc = "Toggle Fold Under Cursor", remap = true })
-map("n", "<leader>Z", "zA", { desc = "Toggle All Fold", remap = true })
+map("n", "<leader>fo", "za", { desc = "Toggle Fold Under Cursor", remap = true })
 
 -- Delete Keymaps
 -- commenting

@@ -91,6 +91,9 @@ require("lazy").setup({
 		opts = { styles = { transparency = neovim_transparent_theme == "1" and true or false } },
 	},
 
+	-- blink.nvim completion configuration
+	{ import = "config.plugins.blink" },
+
 	-- conform.nvim formatter configuration
 	{ import = "config.plugins.conform" },
 
