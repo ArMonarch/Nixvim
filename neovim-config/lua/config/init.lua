@@ -15,3 +15,7 @@ require("neovim-config.lua.config.keymaps")
 
 -- load set vim autocmds
 require("neovim-config.lua.config.autocmds")
+
+-- set runtime path for treesitter parsers
+local neovim_treesitter_parsers = vim.g.neovim_treesitter_parsers or nil
+vim.opt.runtimepath:append(neovim_treesitter_parsers)

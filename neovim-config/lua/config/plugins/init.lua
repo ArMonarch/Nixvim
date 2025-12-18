@@ -7,7 +7,7 @@ local lazyOptions = {
 		lazy = true,
 	},
 	dev = {
-		path = neovim_plugins and string.format("%s/pack/neovim/opt", neovim_plugins) or "",
+		path = neovim_plugins or nil,
 		patterns = { "" },
 		fallback = false,
 	},
@@ -108,6 +108,9 @@ require("lazy").setup({
 
 	-- todo-comments configuration
 	{ import = "config.plugins.todo-comments" },
+
+	-- nvim-treesitter configuration
+	{ import = "config.plugins.nvim-treesitter" },
 
 	-- whick-key.nvim config
 	{ import = "config.plugins.which-key" },

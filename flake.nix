@@ -13,7 +13,6 @@
   outputs =
     {
       nixpkgs,
-      nixpkgs-unstable,
       flake-utils,
       wrappers,
       ...
@@ -23,7 +22,6 @@
       let
         package-name = "neovim";
         stable-pkgs = import nixpkgs { inherit system; };
-        unstable-pkgs = import nixpkgs-unstable { inherit system; };
 
         # flag to set neovim transparent colorscheme
         neovim-transparent-theme = false;
@@ -39,6 +37,7 @@
           conform-nvim
           lazydev-nvim
           mini-icons
+          nvim-treesitter
           plenary-nvim
           snacks-nvim
           smear-cursor-nvim
@@ -46,6 +45,10 @@
           which-key-nvim
         ];
 
+        foldPlugins = builtins.foldl' (
+          acc: next: acc ++ [ next ] ++ (foldPlugins (next.dependencies or [ ]))
+        ) [ ];
+        neovim-treesitter-grammers = with stable-pkgs.vimPlugins; [ nvim-treesitter.withAllGrammars ];
         neovim-packages = stable-pkgs.runCommandLocal "neovim-packages" { } ''
           mkdir -p $out/pack/${package-name}/{start,opt}
           ln -vsfT ${./neovim-config} $out/pack/${package-name}/start/neovim-config
@@ -54,6 +57,15 @@
           ${stable-pkgs.lib.concatMapStringsSep "\n" (
             plugin: "ln -vsfT ${plugin} $out/pack/${package-name}/start/${stable-pkgs.lib.getName plugin}"
           ) neovim-startPlugins}
+
+          # load the treesitter parsers into one folder and append that folder to 
+          # vim runtimepath in the lua config as lazy.nvim resets runtimepath.
+          mkdir -p $out/pack/${package-name}/opt/treesitter/parser
+          ${stable-pkgs.lib.concatMapStringsSep "\n" (plugin: ''
+            for so in ${plugin}/parser/*.so; do
+              ln -vsfT "$so" "$out/pack/${package-name}/opt/treesitter/parser/$(basename "$so")"
+            done
+          '') (stable-pkgs.lib.unique (foldPlugins neovim-treesitter-grammers))}
 
           # load optional plugins which lazy.nvim will load automatically
           ${stable-pkgs.lib.concatMapStringsSep "\n" (
@@ -97,7 +109,8 @@
             "--cmd" = ''
               set packpath^=${neovim-packages} |
               set runtimepath^=${neovim-packages} |
-              let g:neovim_plugins='${neovim-packages}' |
+              let g:neovim_plugins='${neovim-packages}/pack/neovim/opt' |
+              let g:neovim_treesitter_parsers='${neovim-packages}/pack/neovim/opt/treesitter' |
               let g:neovim_transparent_theme='${builtins.toString neovim-transparent-theme}'
             '';
           };
