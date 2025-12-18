@@ -49,41 +49,6 @@ map({ "n", "i" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 -- Open Netrw explorer
 map({ "n" }, "<leader>sn", "<cmd>Ex<cr>", { desc = "Netrw File Explorer" })
 
--- LazyGit
--- if vim.fn.executable("lazygit") == 1 then
--- 	map("n", "<leader>gg", function()
--- 		Snacks.lazygit({ cwd = Snacks.git.get_root() })
--- 	end, { desc = "Lazygit (Root Dir)" })
--- 	map("n", "<leader>gG", function()
--- 		Snacks.lazygit()
--- 	end, { desc = "Lazygit (cwd)" })
--- 	map("n", "<leader>gf", function()
--- 		Snacks.picker.git_log_file()
--- 	end, { desc = "Git Current File History" })
--- 	map("n", "<leader>gl", function()
--- 		Snacks.picker.git_log({ cwd = Snacks.git.get_root() })
--- 	end, { desc = "Git Log" })
--- 	map("n", "<leader>gL", function()
--- 		Snacks.picker.git_log()
--- 	end, { desc = "Git Log (cwd)" })
--- end
-
--- Git
-map("n", "<leader>gb", function()
-	Snacks.picker.git_log_line()
-end, { desc = "Git Blame Line" })
-map({ "n", "x" }, "<leader>gB", function()
-	Snacks.gitbrowse()
-end, { desc = "Git Browse (open)" })
-map({ "n", "x" }, "<leader>gY", function()
-	Snacks.gitbrowse({
-		open = function(url)
-			vim.fn.setreg("+", url)
-		end,
-		notify = false,
-	})
-end, { desc = "Git Browse (copy)" })
-
 -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
 map("n", "n", "'Nn'[v:searchforward].'zv'", { expr = true, desc = "Next Search Result" })
 map("x", "n", "'Nn'[v:searchforward]", { expr = true, desc = "Next Search Result" })
@@ -97,8 +62,9 @@ map("v", "<", "<gv")
 map("v", ">", ">gv")
 
 -- commenting
-map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below" })
-map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Above" })
+vim.keymap.del("n", "gc")
+-- map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below" })
+-- map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Above" })
 
 -- toggle options
 if vim.lsp.inlay_hint then
