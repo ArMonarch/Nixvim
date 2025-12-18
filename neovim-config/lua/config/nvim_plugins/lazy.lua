@@ -100,6 +100,9 @@ require("lazy").setup({
 	-- lazy.dev configuration
 	{ import = "config.nvim_plugins.lazydev" },
 
+	-- lualine configuration
+	{ import = "config.nvim_plugins.lualine" },
+
 	-- mini-icons configuration
 	{ import = "config.nvim_plugins.mini-icons" },
 

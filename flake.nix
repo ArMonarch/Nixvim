@@ -25,6 +25,20 @@
 
         # flag to set neovim transparent colorscheme
         neovim-transparent-theme = false;
+
+        # custom defined neovimPlugins
+        lualine_pretty_path = stable-pkgs.stdenvNoCC.mkDerivation {
+          name = "lualine-pretty-path";
+          src = stable-pkgs.fetchFromGitHub {
+            owner = "bwpge";
+            repo = "lualine-pretty-path";
+            rev = "852cb06f3562bced4776a924e56a9e44d0ce634f";
+            hash = "sha256-Ieho+EruCPW4829+qQ3cdfc+wZQ2CFd16YtcTwUAnKg=";
+          };
+          phases = [ "installPhase" ];
+          installPhase = "cp -r $src $out";
+        };
+
         neovim-startPlugins = with stable-pkgs.vimPlugins; [
           lazy-nvim
           plenary-nvim
@@ -37,6 +51,7 @@
           blink-cmp
           conform-nvim
           lazydev-nvim
+          lualine-nvim
           mini-icons
           nvim-treesitter
           plenary-nvim
@@ -44,12 +59,15 @@
           smear-cursor-nvim
           todo-comments-nvim
           which-key-nvim
+
+          lualine_pretty_path
         ];
 
         foldPlugins = builtins.foldl' (
           acc: next: acc ++ [ next ] ++ (foldPlugins (next.dependencies or [ ]))
         ) [ ];
         neovim-treesitter-grammers = with stable-pkgs.vimPlugins; [ nvim-treesitter.withAllGrammars ];
+
         neovim-packages = stable-pkgs.runCommandLocal "neovim-packages" { } ''
           mkdir -p $out/pack/${package-name}/{start,opt}
           ln -vsfT ${./neovim-config} $out/pack/${package-name}/start/neovim-config
