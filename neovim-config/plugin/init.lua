@@ -1,2 +1,2 @@
 --- load the custom neovim config
-require("config")
+require("config.init")

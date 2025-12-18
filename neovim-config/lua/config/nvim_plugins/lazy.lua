@@ -92,31 +92,31 @@ require("lazy").setup({
 	},
 
 	-- blink.nvim completion configuration
-	{ import = "config.plugins.blink" },
+	{ import = "config.nvim_plugins.blink" },
 
 	-- conform.nvim formatter configuration
-	{ import = "config.plugins.conform" },
+	{ import = "config.nvim_plugins.conform" },
 
 	-- lazy.dev configuration
-	{ import = "config.plugins.lazydev" },
+	{ import = "config.nvim_plugins.lazydev" },
 
 	-- mini-icons configuration
-	{ import = "config.plugins.mini-icons" },
+	{ import = "config.nvim_plugins.mini-icons" },
 
 	-- snacks.nvim configuration
-	{ import = "config.plugins.snacks" },
+	{ import = "config.nvim_plugins.snacks" },
 
 	-- smearcursor.nvim animation configuration
-	{ import = "config.plugins.smear-cursor" },
+	{ import = "config.nvim_plugins.smear-cursor" },
 
 	-- todo-comments configuration
-	{ import = "config.plugins.todo-comments" },
+	{ import = "config.nvim_plugins.todo-comments" },
 
 	-- nvim-treesitter configuration
-	{ import = "config.plugins.nvim-treesitter" },
+	{ import = "config.nvim_plugins.nvim-treesitter" },
 
 	-- whick-key.nvim config
-	{ import = "config.plugins.which-key" },
+	{ import = "config.nvim_plugins.which-key" },
 }, lazyOptions)
 
 -- set colorscheme
