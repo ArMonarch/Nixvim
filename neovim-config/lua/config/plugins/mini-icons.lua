@@ -1,5 +1,6 @@
 return {
 	"echasnovski/mini.icons",
+	name = "mini.icons",
 	lazy = true,
 	opts = {
 		file = {

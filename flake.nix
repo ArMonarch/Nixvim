@@ -39,8 +39,10 @@
           conform-nvim
           lazydev-nvim
           mini-icons
+          plenary-nvim
           snacks-nvim
           smear-cursor-nvim
+          todo-comments-nvim
           which-key-nvim
         ];
 

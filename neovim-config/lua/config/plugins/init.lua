@@ -103,8 +103,11 @@ require("lazy").setup({
 	-- snacks.nvim configuration
 	{ import = "config.plugins.snacks" },
 
-	-- smearcursor.nvim animation
+	-- smearcursor.nvim animation configuration
 	{ import = "config.plugins.smear-cursor" },
+
+	-- todo-comments configuration
+	{ import = "config.plugins.todo-comments" },
 
 	-- whick-key.nvim config
 	{ import = "config.plugins.which-key" },
