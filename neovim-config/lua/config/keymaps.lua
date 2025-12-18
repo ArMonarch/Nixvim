@@ -61,11 +61,6 @@ map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result
 map("v", "<", "<gv")
 map("v", ">", ">gv")
 
--- commenting
-vim.keymap.del("n", "gc")
--- map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below" })
--- map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Above" })
-
 -- toggle options
 if vim.lsp.inlay_hint then
 	Snacks.toggle.inlay_hints():map("<leader>uh")
@@ -138,3 +133,12 @@ map("n", "<leader>|", "<C-W>v", { desc = "Split Window Right", remap = true })
 map("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
 Snacks.toggle.zoom():map("<leader>wm"):map("<leader>uZ")
 Snacks.toggle.zen():map("<leader>uz")
+
+-- Delete Keymaps
+-- commenting
+vim.keymap.del("n", "gc")
+vim.keymap.del("n", "gra")
+vim.keymap.del("n", "grn")
+vim.keymap.del("n", "gri")
+vim.keymap.del("n", "grr")
+vim.keymap.del("n", "grt")
