@@ -40,6 +40,22 @@ return {
 			desc = "Delete Other Buffers",
 		},
 
+		-- snacks lazygit keymaps
+		{
+			"<leader>gg",
+			function()
+				Snacks.lazygit({ cwd = Snacks.git.get_root() })
+			end,
+			desc = "Lazygit (Root Directory)",
+		},
+		{
+			"<leader>gG",
+			function()
+				Snacks.lazygit()
+			end,
+			desc = "Lazygit (cwd)",
+		},
+
 		-- snacks explorer keymaps
 		{
 			"<leader>e",
