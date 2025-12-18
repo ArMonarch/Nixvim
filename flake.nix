@@ -25,19 +25,21 @@
         stable-pkgs = import nixpkgs { inherit system; };
         unstable-pkgs = import nixpkgs-unstable { inherit system; };
 
+        # flag to set neovim transparent colorscheme
         neovim-transparent-theme = false;
         neovim-startPlugins = with stable-pkgs.vimPlugins; [
-          plenary-nvim
           lazy-nvim
+          plenary-nvim
         ];
         neovim-optPlugins = with stable-pkgs.vimPlugins; [
           tokyonight-nvim
           catppuccin-nvim
           rose-pine
 
-          which-key-nvim
-          smear-cursor-nvim
           conform-nvim
+          snacks-nvim
+          smear-cursor-nvim
+          which-key-nvim
         ];
 
         neovim-packages = stable-pkgs.runCommandLocal "neovim-packages" { } ''
@@ -75,11 +77,11 @@
 
             # Formatters Packages
             nixfmt-rfc-style
+            prettierd
             stylua
             shfmt
             ruff
             rustfmt
-            prettierd
 
           ];
           env = {
