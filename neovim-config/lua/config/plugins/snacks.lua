@@ -4,21 +4,22 @@ return {
 	priority = 1000,
 	lazy = false,
 	opts = {
-		bigfile = { enabled = false },
+		bigfile = { enabled = true },
 		dashboard = { enabled = false },
 		explorer = { enabled = true },
 		indent = { enabled = true },
-		input = { enabled = false },
+		input = { enabled = true },
+		image = { enabled = true },
 		picker = {
 			enabled = true,
 			layout = { preset = "telescope" },
 		},
-		notifier = { enabled = false },
-		quickfile = { enabled = false },
+		notifier = { enabled = true },
+		quickfile = { enabled = true },
 		scope = { enabled = false },
 		scroll = { enabled = false },
-		statuscolumn = { enabled = false },
-		words = { enabled = false },
+		statuscolumn = { enabled = true },
+		words = { enabled = true },
 	},
   -- stylua: ignore
 	keys = {

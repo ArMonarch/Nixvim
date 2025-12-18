@@ -128,6 +128,10 @@ map("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
 Snacks.toggle.zoom():map("<leader>wm"):map("<leader>uZ")
 Snacks.toggle.zen():map("<leader>uz")
 
+-- folds keymaps
+map("n", "<leader>z", "za", { desc = "Toggle Fold Under Cursor", remap = true })
+map("n", "<leader>Z", "zA", { desc = "Toggle All Fold", remap = true })
+
 -- Delete Keymaps
 -- commenting
 vim.keymap.del("n", "gc")
