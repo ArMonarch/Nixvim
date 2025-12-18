@@ -64,6 +64,8 @@
           exePath = nixpkgs.lib.getExe package;
           binName = builtins.baseNameOf exePath;
           runtimeInputs = with stable-pkgs; [
+            # Packages that plugins depends on
+            lazygit # <- snacks.nvim
 
             # LSP Servers Packages
             basedpyright
@@ -82,7 +84,6 @@
             shfmt
             ruff
             rustfmt
-
           ];
           env = {
             "NVIM_APPNAME" = "neovim";
