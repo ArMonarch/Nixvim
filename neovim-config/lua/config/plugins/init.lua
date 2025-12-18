@@ -97,6 +97,9 @@ require("lazy").setup({
 	-- lazy.dev configuration
 	{ import = "config.plugins.lazydev" },
 
+	-- mini-icons configuration
+	{ import = "config.plugins.mini-icons" },
+
 	-- snacks.nvim configuration
 	{ import = "config.plugins.snacks" },
 
