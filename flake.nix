@@ -37,6 +37,7 @@
           rose-pine
 
           conform-nvim
+          lazydev-nvim
           snacks-nvim
           smear-cursor-nvim
           which-key-nvim

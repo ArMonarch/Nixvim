@@ -94,6 +94,9 @@ require("lazy").setup({
 	-- conform.nvim formatter configuration
 	{ import = "config.plugins.conform" },
 
+	-- lazy.dev configuration
+	{ import = "config.plugins.lazydev" },
+
 	-- snacks.nvim configuration
 	{ import = "config.plugins.snacks" },
 
