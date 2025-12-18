@@ -3,38 +3,44 @@ return {
 	priority = 1000,
 	lazy = false,
 	opts = {
+		bigfile = { enabled = false },
 		dashboard = { enabled = false },
-		explorer = { enabled = true },
-		git = { enabled = true },
-		indent = { enabled = true },
+		explorer = { enabled = false },
+		indent = { enabled = false },
 		input = { enabled = false },
-		lazygit = { enabled = true },
 		picker = { enabled = false },
-		notifier = { enabled = true },
+		notifier = { enabled = false },
 		quickfile = { enabled = false },
 		scope = { enabled = false },
 		scroll = { enabled = false },
 		statuscolumn = { enabled = false },
-		toggle = { enabled = true },
-		util = { enabled = false },
 		words = { enabled = false },
 	},
 	keys = {
+		-- snacks buffer delete keymaps
 		{
-			"<leader>n",
+			"<leader>ba",
 			function()
-				Snacks.notifier.show_history()
+				Snacks.bufdelete.all()
 			end,
-			desc = "Notification History",
+			desc = "Delete All Buffers",
 		},
 		{
-			"<leader>un",
+			"<leader>bd",
 			function()
-				Snacks.notifier.hide()
+				Snacks.bufdelete.delete()
 			end,
-			desc = "Dismiss All Notifications",
+			desc = "Delete Current Buffer",
 		},
-		-- Explorer Keymaps
+		{
+			"<leader>bo",
+			function()
+				Snacks.bufdelete.other()
+			end,
+			desc = "Delete Other Buffers",
+		},
+
+		-- snacks explorer keymaps
 		{
 			"<leader>e",
 			function()
@@ -62,6 +68,21 @@ return {
 				Snacks.explorer()
 			end,
 			desc = "Explorer Snacks (cwd)",
+		},
+		-- snacks notifications keymaps
+		{
+			"<leader>nh",
+			function()
+				Snacks.notifier.show_history()
+			end,
+			desc = "Notification History",
+		},
+		{
+			"<leader>nd",
+			function()
+				Snacks.notifier.hide()
+			end,
+			desc = "Dismiss All Notifications",
 		},
 	},
 }
