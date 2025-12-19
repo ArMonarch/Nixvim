@@ -43,6 +43,7 @@
           lazydev-nvim
           lualine-nvim
           mini-icons
+          mini-pairs
           nvim-treesitter
           plenary-nvim
           snacks-nvim

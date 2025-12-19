@@ -109,6 +109,9 @@ require("lazy").setup({
 	-- mini-icons configuration
 	{ import = "config.nvim_plugins.mini-icons" },
 
+	-- mini-pairs configuration
+	{ import = "config.nvim_plugins.mini-pairs" },
+
 	-- snacks.nvim configuration
 	{ import = "config.nvim_plugins.snacks" },
 
