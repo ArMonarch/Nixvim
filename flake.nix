@@ -42,6 +42,8 @@
           gitsigns-nvim
           lazydev-nvim
           lualine-nvim
+          noice-nvim
+          nui-nvim # <- noice-nvim
           mini-icons
           mini-pairs
           nvim-treesitter

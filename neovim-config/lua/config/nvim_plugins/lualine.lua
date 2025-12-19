@@ -32,6 +32,7 @@ return {
 		local opts = {
 			options = {
 				theme = "auto",
+				component_separators = { left = "->", right = "" },
 				globalstatus = vim.o.laststatus == 3,
 				disable_filetypes = { statusline = { "dashboard", "alpha", "ministarter", "snacks_dashboard" } },
 			},
@@ -55,7 +56,28 @@ return {
 				},
 
 				lualine_x = {
-
+					{
+						function()
+							return require("noice").api.status.command.get()
+						end,
+						cond = function()
+							return package.loaded["noice"] and require("noice").api.status.command.has()
+						end,
+						color = function()
+							return { fg = Snacks.util.color("Statement") }
+						end,
+					},
+					{
+						function()
+							return require("noice").api.status.mode.get()
+						end,
+						cond = function()
+							return package.loaded["noice"] and require("noice").api.status.mode.has()
+						end,
+						color = function()
+							return { fg = Snacks.util.color("Constant") }
+						end,
+					},
 					{
 						"diff",
 						symbols = {
@@ -89,7 +111,6 @@ return {
 			},
 			extensions = { "neo-tree", "lazy", "fzf" },
 		}
-
 		return opts
 	end,
 }

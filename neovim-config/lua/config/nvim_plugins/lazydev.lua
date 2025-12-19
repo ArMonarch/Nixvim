@@ -6,6 +6,7 @@ return {
 	opts = {
 		library = {
 			{ path = "snacks.nvim", word = { "Snacks" } },
+			{ path = "noice.nvim", word = { "noice" } },
 		},
 	},
 }
