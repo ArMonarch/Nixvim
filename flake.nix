@@ -48,6 +48,7 @@
           mini-pairs
           nvim-treesitter
           plenary-nvim
+          render-markdown-nvim
           snacks-nvim
           smear-cursor-nvim
           todo-comments-nvim

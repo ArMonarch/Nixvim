@@ -14,6 +14,7 @@ local lazyOptions = {
 			"echasnovski",
 			"folke",
 			"lewis6991",
+			"MeanderingProgrammer",
 			"MunifTanjim",
 			"nvim-lua",
 			"nvim-lualine",
@@ -23,10 +24,10 @@ local lazyOptions = {
 			"sphamba",
 			"stevearc",
 		},
-		fallback = true,
+		fallback = false,
 	},
 	install = {
-		missing = true,
+		missing = false,
 		colorscheme = { "retrobox" },
 	},
 	performance = {
@@ -148,6 +149,9 @@ require("lazy").setup({
 
 	-- nvim-treesitter configuration
 	{ import = "config.nvim_plugins.nvim-treesitter" },
+
+	-- render-markdown configuration
+	{ import = "config.nvim_plugins.render-markdown" },
 
 	-- whick-key.nvim config
 	{ import = "config.nvim_plugins.which-key" },
