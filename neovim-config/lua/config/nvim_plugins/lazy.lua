@@ -125,11 +125,6 @@ require("lazy").setup({
 	-- lualine configuration
 	{ import = "config.nvim_plugins.lualine" },
 
-	-- neorg will be loaded through lazy.nvim installer
-	-- as using this through flake.nix is an massive pain
-	-- neorg configuration
-	{ import = "config.nvim_plugins.neorg" },
-
 	-- noice configuration for commandline only
 	{ import = "config.nvim_plugins.noice" },
 
