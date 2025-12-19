@@ -13,6 +13,7 @@
   outputs =
     {
       nixpkgs,
+      nixpkgs-unstable,
       flake-utils,
       wrappers,
       ...
@@ -22,6 +23,7 @@
       let
         package-name = "neovim";
         stable-pkgs = import nixpkgs { inherit system; };
+        unstable-pkgs = import nixpkgs-unstable { inherit system; };
 
         # flag to set neovim transparent colorscheme
         neovim-transparent-theme = false;
@@ -63,7 +65,7 @@
         foldPlugins = builtins.foldl' (
           acc: next: acc ++ [ next ] ++ (foldPlugins (next.dependencies or [ ]))
         ) [ ];
-        neovim-treesitter-grammers = with stable-pkgs.vimPlugins; [ nvim-treesitter.withAllGrammars ];
+        neovim-treesitter-grammers = with unstable-pkgs.vimPlugins; [ nvim-treesitter.withAllGrammars ];
 
         neovim-packages = stable-pkgs.runCommandLocal "neovim-packages" { } ''
           mkdir -p $out/pack/${package-name}/{start,opt}
