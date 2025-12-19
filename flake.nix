@@ -39,6 +39,7 @@
 
           blink-cmp
           conform-nvim
+          gitsigns-nvim
           lazydev-nvim
           lualine-nvim
           mini-icons

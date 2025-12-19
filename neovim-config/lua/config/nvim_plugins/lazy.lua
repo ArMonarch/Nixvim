@@ -97,6 +97,9 @@ require("lazy").setup({
 	-- conform.nvim formatter configuration
 	{ import = "config.nvim_plugins.conform" },
 
+	-- gitsigns.nvim configuration
+	{ import = "config.nvim_plugins.gitsigns" },
+
 	-- lazy.dev configuration
 	{ import = "config.nvim_plugins.lazydev" },
 
