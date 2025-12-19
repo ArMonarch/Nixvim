@@ -2,7 +2,7 @@ return {
 	"nvim-treesitter/nvim-treesitter",
 	name = "nvim-treesitter",
 	lazy = true,
-	event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+	event = { "VeryLazy" },
 	opts = {
 		parser_install_dir = nil,
 		auto_install = false,
