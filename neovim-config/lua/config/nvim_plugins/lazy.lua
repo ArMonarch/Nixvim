@@ -8,11 +8,25 @@ local lazyOptions = {
 	},
 	dev = {
 		path = neovim_plugins or nil,
-		patterns = { "" },
-		fallback = false,
+		patterns = {
+			"bwpge",
+			"catppuccin",
+			"echasnovski",
+			"folke",
+			"lewis6991",
+			"MunifTanjim",
+			"nvim-lua",
+			"nvim-lualine",
+			"nvim-treesitter",
+			"rose-pine",
+			"saghen",
+			"sphamba",
+			"stevearc",
+		},
+		fallback = true,
 	},
 	install = {
-		missing = false,
+		missing = true,
 		colorscheme = { "retrobox" },
 	},
 	performance = {
@@ -111,8 +125,10 @@ require("lazy").setup({
 	-- lualine configuration
 	{ import = "config.nvim_plugins.lualine" },
 
+	-- neorg will be loaded through lazy.nvim installer
+	-- as using this through flake.nix is an massive pain
 	-- neorg configuration
-	-- { import = "config.nvim_plugins.neorg" },
+	{ import = "config.nvim_plugins.neorg" },
 
 	-- noice configuration for commandline only
 	{ import = "config.nvim_plugins.noice" },

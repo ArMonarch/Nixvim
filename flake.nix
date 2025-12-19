@@ -105,6 +105,8 @@
           runtimeInputs = with stable-pkgs; [
             # Packages that plugins depends on
             lazygit # <- snacks.nvim
+            lua5_1
+            luajitPackages.luarocks
             gh # <- snacks.nvim
 
             # LSP Servers Packages
