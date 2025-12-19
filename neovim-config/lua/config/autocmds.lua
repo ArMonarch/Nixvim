@@ -10,19 +10,23 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 local lsp_hishlight = vim.api.nvim_create_augroup("lsp-hishlight", { clear = false })
 
 -- Highlight refrences of the word under the cursor
-vim.api.nvim_create_autocmd({ "CursorMoved", "cursorMovedI" }, {
+vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 	desc = "Highlight refrences of the word under the cursor",
 	group = lsp_hishlight,
 	pattern = { "*.c", "*.h", "*.py", "*.rs", "*.lua", "*.nix", "*.js", "*.ts", "*.jsx", "*.tsx", "*.zig" },
-	callback = vim.lsp.buf.document_highlight,
+	callback = function()
+		vim.lsp.buf.document_highlight()
+	end,
 })
 
 -- Highlight refrences of the word under the cursor
-vim.api.nvim_create_autocmd({ "CursorMoved", "cursorMovedI" }, {
+vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
 	desc = "Highlight refrences of the word under the cursor",
 	group = lsp_hishlight,
 	pattern = { "*.c", "*.h", "*.py", "*.rs", "*.lua", "*.nix", "*.js", "*.ts", "*.jsx", "*.tsx", "*.zig" },
-	callback = vim.lsp.buf.clear_references,
+	callback = function()
+		vim.lsp.buf.clear_references()
+	end,
 })
 
 -- go to last loc when opening a buffer

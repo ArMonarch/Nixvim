@@ -20,3 +20,30 @@ vim.lsp.enable("zls")
 
 -- Enable Inlay Hints
 vim.lsp.inlay_hint.enable(true)
+
+--  This function gets run when an LSP attaches to a particular buffer.
+
+vim.api.nvim_create_autocmd({ "LspAttach" }, {
+	group = vim.api.nvim_create_augroup("buf-lsp-attach", { clear = true }),
+	callback = function()
+		local map = function(mode, keys, func, desc)
+			vim.keymap.set(mode, keys, func, { desc = desc })
+		end
+
+		-- lsp keymaps
+		map({ "n" }, "K", function()
+			vim.lsp.buf.hover({
+				border = "single",
+				max_height = 15,
+				max_width = 80,
+			})
+		end, "Code Hover")
+		map({ "n" }, "<C-k>", function()
+			vim.lsp.buf.hover({
+				border = "single",
+				max_height = 15,
+				max_width = 80,
+			})
+		end, "Code Hover")
+	end,
+})
