@@ -41,7 +41,7 @@ map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 map({ "n", "i" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 
 -- Open Netrw explorer
-map({ "n" }, "<leader>sn", "<cmd>Ex<cr>", { desc = "Netrw File Explorer" })
+map({ "n" }, "<leader>se", "<cmd>Ex<cr>", { desc = "Netrw File Explorer" })
 
 -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
 map("n", "n", "'Nn'[v:searchforward].'zv'", { expr = true, desc = "Next Search Result" })
