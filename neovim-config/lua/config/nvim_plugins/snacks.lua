@@ -53,8 +53,8 @@ return {
     { "<leader>gP", function() Snacks.picker.gh_pr({ state = "all" }) end, desc = "GitHub Pull Requests (all)" },
 
 		-- snacks lazygit keymaps
-		{	"<leader>gg", function() Snacks.lazygit({ cwd = Snacks.git.get_root() }) end, desc = "Lazygit (Root Directory)" },
-		{	"<leader>gG", function() Snacks.lazygit() end, desc = "Lazygit (cwd)" },
+		{	"<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
+		{	"<leader>gG", function() Snacks.lazygit({ cwd = vim.fn.expand('%:p:h') }) end, desc = "Lazygit (cwd)" },
 
     -- snacks picker -> misc keymaps
 		{	"<leader><leader>", function() Snacks.picker.files() end, desc = "Find Files" },
@@ -64,6 +64,7 @@ return {
     -- snacks picker -> files keymaps
     { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
     { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
+    { "<leader>fF", function() Snacks.picker.files({ cwd = vim.fn.expand('%:p:h') }) end, desc = "Find Files (cdw)" },
     { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" },
     { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
     { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent" },
@@ -90,6 +91,8 @@ return {
     { "<leader>sC", function() Snacks.picker.command_history() end, desc = "Command History" },
     { "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
     { "<leader>sD", function() Snacks.picker.diagnostics_buffer() end, desc = "Buffer Diagnostics" },
+    { "<leader>sf", function() Snacks.picker.files() end, desc = "Search Files" },
+    { "<leader>sF", function() Snacks.picker.files({ cwd = vim.fn.expand('%:p:h') }) end, desc = "Search Find Files (cwd)" },
     { "<leader>sh", function() Snacks.picker.highlights() end, desc = "Highlights" },
     { "<leader>sH", function() Snacks.picker.help() end, desc = "Help Pages" },
     { "<leader>si", function() Snacks.picker.icons() end, desc = "Icons" },
