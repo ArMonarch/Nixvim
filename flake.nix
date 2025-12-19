@@ -32,51 +32,45 @@
           lazy-nvim
           plenary-nvim
         ];
-        neovim-optPlugins =
-          with stable-pkgs.vimPlugins;
-          [
-            tokyonight-nvim
-            catppuccin-nvim
-            rose-pine
+        neovim-optPlugins = with stable-pkgs.vimPlugins; [
+          tokyonight-nvim
+          catppuccin-nvim
+          rose-pine
 
-            blink-cmp
-            conform-nvim
-            gitsigns-nvim
-            lazydev-nvim
-            lualine-nvim
-            neorg
-            noice-nvim
-            nui-nvim # <- noice-nvim
-            mini-icons
-            mini-pairs
-            nvim-treesitter
-            plenary-nvim
-            snacks-nvim
-            smear-cursor-nvim
-            todo-comments-nvim
-            trouble-nvim
-            which-key-nvim
+          blink-cmp
+          conform-nvim
+          gitsigns-nvim
+          lazydev-nvim
+          lualine-nvim
+          noice-nvim
+          nui-nvim # <- noice-nvim
+          mini-icons
+          mini-pairs
+          nvim-treesitter
+          plenary-nvim
+          snacks-nvim
+          smear-cursor-nvim
+          todo-comments-nvim
+          trouble-nvim
+          which-key-nvim
 
-            (stable-pkgs.stdenvNoCC.mkDerivation {
-              name = "lualine-pretty-path";
-              src = stable-pkgs.fetchFromGitHub {
-                owner = "bwpge";
-                repo = "lualine-pretty-path";
-                rev = "852cb06f3562bced4776a924e56a9e44d0ce634f";
-                hash = "sha256-Ieho+EruCPW4829+qQ3cdfc+wZQ2CFd16YtcTwUAnKg=";
-              };
-              phases = [ "installPhase" ];
-              installPhase = "cp -r $src $out";
-            })
-          ]
-          ++ [ stable-pkgs.luajitPackages.lua-utils-nvim ];
+          (stable-pkgs.stdenvNoCC.mkDerivation {
+            name = "lualine-pretty-path";
+            src = stable-pkgs.fetchFromGitHub {
+              owner = "bwpge";
+              repo = "lualine-pretty-path";
+              rev = "852cb06f3562bced4776a924e56a9e44d0ce634f";
+              hash = "sha256-Ieho+EruCPW4829+qQ3cdfc+wZQ2CFd16YtcTwUAnKg=";
+            };
+            phases = [ "installPhase" ];
+            installPhase = "cp -r $src $out";
+          })
+        ];
 
         foldPlugins = builtins.foldl' (
           acc: next: acc ++ [ next ] ++ (foldPlugins (next.dependencies or [ ]))
         ) [ ];
-        neovim-treesitter-grammers = with unstable-pkgs.vimPlugins; [
-          nvim-treesitter.withAllGrammars
-        ];
+        neovim-treesitter-grammers = with unstable-pkgs.vimPlugins; [ nvim-treesitter.withAllGrammars ];
 
         neovim-packages = stable-pkgs.runCommandLocal "neovim-packages" { } ''
           mkdir -p $out/pack/${package-name}/{start,opt}

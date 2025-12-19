@@ -20,6 +20,8 @@ require("config.nvim_plugins.lazy")
 local neovim_treesitter_parsers = vim.g.neovim_treesitter_parsers or nil
 vim.opt.runtimepath:append(neovim_treesitter_parsers)
 
+vim.treesitter.language.register("neorg", { "norg" })
+
 -- toggle options
 if vim.lsp.inlay_hint then
 	Snacks.toggle.inlay_hints():map("<leader>uh")
