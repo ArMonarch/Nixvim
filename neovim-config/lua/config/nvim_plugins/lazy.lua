@@ -118,6 +118,9 @@ require("lazy").setup({
 	-- todo-comments configuration
 	{ import = "config.nvim_plugins.todo-comments" },
 
+	-- trouble configuration
+	{ import = "config.nvim_plugins.trouble" },
+
 	-- nvim-treesitter configuration
 	{ import = "config.nvim_plugins.nvim-treesitter" },
 

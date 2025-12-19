@@ -48,6 +48,7 @@
           snacks-nvim
           smear-cursor-nvim
           todo-comments-nvim
+          trouble-nvim
           which-key-nvim
 
           (stable-pkgs.stdenvNoCC.mkDerivation {
