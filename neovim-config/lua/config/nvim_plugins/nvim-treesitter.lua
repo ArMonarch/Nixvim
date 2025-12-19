@@ -1,8 +1,7 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
 	name = "nvim-treesitter",
-	lazy = true,
-	event = { "VeryLazy" },
+	lazy = false,
 	opts = {
 		parser_install_dir = nil,
 		auto_install = false,

@@ -111,6 +111,9 @@ require("lazy").setup({
 	-- lualine configuration
 	{ import = "config.nvim_plugins.lualine" },
 
+	-- neorg configuration
+	-- { import = "config.nvim_plugins.neorg" },
+
 	-- noice configuration for commandline only
 	{ import = "config.nvim_plugins.noice" },
 
