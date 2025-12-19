@@ -103,6 +103,7 @@
           runtimeInputs = with stable-pkgs; [
             # Packages that plugins depends on
             lazygit # <- snacks.nvim
+            gh # <- snacks.nvim
 
             # LSP Servers Packages
             basedpyright

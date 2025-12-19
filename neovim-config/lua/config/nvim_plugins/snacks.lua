@@ -46,6 +46,12 @@ return {
 		{	"<leader>bd", function() Snacks.bufdelete.delete() end, desc = "Delete Current Buffer" },
 		{	"<leader>bo", function() Snacks.bufdelete.other() end, desc = "Delete Other Buffers" },
 
+    -- snacks gh keymaps
+    { "<leader>gi", function() Snacks.picker.gh_issue() end, desc = "GitHub Issues (open)" },
+    { "<leader>gI", function() Snacks.picker.gh_issue({ state = "all" }) end, desc = "GitHub Issues (all)" },
+    { "<leader>gp", function() Snacks.picker.gh_pr() end, desc = "GitHub Pull Requests (open)" },
+    { "<leader>gP", function() Snacks.picker.gh_pr({ state = "all" }) end, desc = "GitHub Pull Requests (all)" },
+
 		-- snacks lazygit keymaps
 		{	"<leader>gg", function() Snacks.lazygit({ cwd = Snacks.git.get_root() }) end, desc = "Lazygit (Root Directory)" },
 		{	"<leader>gG", function() Snacks.lazygit() end, desc = "Lazygit (cwd)" },
