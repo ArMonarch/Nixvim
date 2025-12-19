@@ -66,6 +66,11 @@ local lazyOptions = {
 -- setup lazy.vim
 require("lazy").setup({
 	{
+		"nvim-lua/plenary.nvim",
+		name = "plenary.nvim",
+		lazy = true,
+	},
+	{
 		"folke/tokyonight.nvim",
 		name = "tokyonight.nvim",
 		lazy = false,
