@@ -150,9 +150,6 @@ require("lazy").setup({
 	-- nvim-treesitter configuration
 	{ import = "config.nvim_plugins.nvim-treesitter" },
 
-	-- render-markdown configuration
-	{ import = "config.nvim_plugins.render-markdown" },
-
 	-- whick-key.nvim config
 	{ import = "config.nvim_plugins.which-key" },
 }, lazyOptions)
