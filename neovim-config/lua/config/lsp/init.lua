@@ -6,6 +6,7 @@ require("config.lsp.config.nil_ls")
 require("config.lsp.config.nixd")
 require("config.lsp.config.rust_analyzer")
 require("config.lsp.config.ts_ls")
+require("config.lsp.config.texlab")
 require("config.lsp.config.zls")
 
 -- NOTE: Enable Language Servers here,
@@ -18,6 +19,7 @@ vim.lsp.enable("nil_ls")
 vim.lsp.enable("nixd")
 vim.lsp.enable("rust-analyzer")
 vim.lsp.enable("ts_ls")
+vim.lsp.enable("texlab")
 vim.lsp.enable("zls")
 
 -- Enable Inlay Hints
