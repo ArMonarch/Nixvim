@@ -2,16 +2,13 @@ return {
 	"folke/noice.nvim",
 	name = "noice.nvim",
 	event = "VeryLazy",
+	cmd = "Noice",
 	dependencies = { "MunifTanjim/nui.nvim" },
 	opts = {
 		lsp = {
+			progress = { enabled = true },
 			hover = { enabled = false },
 			signature = { enabled = false },
-			override = {
-				["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-				["vim.lsp.util.stylize_markdown"] = true,
-				["cmp.entry.get_documentation"] = true,
-			},
 		},
 		routes = {
 			{
@@ -27,9 +24,11 @@ return {
 			},
 		},
 		presets = {
-			bottom_search = true,
-			command_palette = true,
+			bottom_search = false,
+			command_palette = false,
 			long_message_to_split = true,
+			inc_rename = false,
+			lsp_doc_border = false,
 		},
 	},
   -- stylua: ignore
@@ -44,13 +43,4 @@ return {
     { "<c-f>", function() if not require("noice.lsp").scroll(4) then return "<c-f>" end end, silent = true, expr = true, desc = "Scroll Forward", mode = {"i", "n", "s"} },
     { "<c-b>", function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end, silent = true, expr = true, desc = "Scroll Backward", mode = {"i", "n", "s"}},
   },
-	config = function(_, opts)
-		-- HACK: noice shows messages from before it was enabled,
-		-- but this is not ideal when Lazy is installing plugins,
-		-- so clear the messages in this case.
-		if vim.o.filetype == "lazy" then
-			vim.cmd([[messages clear]])
-		end
-		require("noice").setup(opts)
-	end,
 }
