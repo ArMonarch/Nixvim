@@ -1,4 +1,5 @@
 require("config.lsp.config.basedpyright")
+require("config.lsp.config.denols")
 require("config.lsp.config.lua_ls")
 require("config.lsp.config.marksman")
 require("config.lsp.config.nil_ls")
@@ -10,6 +11,7 @@ require("config.lsp.config.zls")
 -- NOTE: Enable Language Servers here,
 -- needs Neovim v0.11+, as it used functions available on Neovim version >= 0.11
 vim.lsp.enable("basedpyright")
+vim.lsp.enable("denols")
 vim.lsp.enable("lua_ls")
 vim.lsp.enable("marksman")
 vim.lsp.enable("nil_ls")

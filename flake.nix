@@ -109,6 +109,7 @@
 
             # LSP Servers Packages
             basedpyright
+            deno
             lua-language-server
             marksman
             nixd
