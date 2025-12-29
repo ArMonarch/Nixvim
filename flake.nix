@@ -10,20 +10,18 @@
     };
   };
 
-  outputs =
-    {
-      nixpkgs,
-      nixpkgs-unstable,
-      flake-utils,
-      wrappers,
-      ...
-    }:
+  outputs = {
+    nixpkgs,
+    nixpkgs-unstable,
+    flake-utils,
+    wrappers,
+    ...
+  }:
     flake-utils.lib.eachDefaultSystem (
-      system:
-      let
+      system: let
         package-name = "neovim";
-        stable-pkgs = import nixpkgs { inherit system; };
-        unstable-pkgs = import nixpkgs-unstable { inherit system; };
+        stable-pkgs = import nixpkgs {inherit system;};
+        unstable-pkgs = import nixpkgs-unstable {inherit system;};
 
         # flag to set neovim transparent colorscheme
         neovim-transparent-theme = false;
@@ -63,26 +61,27 @@
               rev = "852cb06f3562bced4776a924e56a9e44d0ce634f";
               hash = "sha256-Ieho+EruCPW4829+qQ3cdfc+wZQ2CFd16YtcTwUAnKg=";
             };
-            phases = [ "installPhase" ];
+            phases = ["installPhase"];
             installPhase = "cp -r $src $out";
           })
         ];
 
         foldPlugins = builtins.foldl' (
-          acc: next: acc ++ [ next ] ++ (foldPlugins (next.dependencies or [ ]))
-        ) [ ];
-        neovim-treesitter-grammers = with unstable-pkgs.vimPlugins; [ nvim-treesitter.withAllGrammars ];
+          acc: next: acc ++ [next] ++ (foldPlugins (next.dependencies or []))
+        ) [];
+        neovim-treesitter-grammers = with unstable-pkgs.vimPlugins; [nvim-treesitter.withAllGrammars];
 
-        neovim-packages = stable-pkgs.runCommandLocal "neovim-packages" { } ''
+        neovim-packages = stable-pkgs.runCommandLocal "neovim-packages" {} ''
           mkdir -p $out/pack/${package-name}/{start,opt}
           ln -vsfT ${./neovim-config} $out/pack/${package-name}/start/neovim-config
 
           # necessary packages should be loaded at start i.e. mainly plugins manager and its helper package
           ${stable-pkgs.lib.concatMapStringsSep "\n" (
-            plugin: "ln -vsfT ${plugin} $out/pack/${package-name}/start/${stable-pkgs.lib.getName plugin}"
-          ) neovim-startPlugins}
+              plugin: "ln -vsfT ${plugin} $out/pack/${package-name}/start/${stable-pkgs.lib.getName plugin}"
+            )
+            neovim-startPlugins}
 
-          # load the treesitter parsers into one folder and append that folder to 
+          # load the treesitter parsers into one folder and append that folder to
           # vim runtimepath in the lua config as lazy.nvim resets runtimepath.
           mkdir -p $out/pack/${package-name}/opt/treesitter/parser
           ${stable-pkgs.lib.concatMapStringsSep "\n" (plugin: ''
@@ -93,18 +92,17 @@
 
           # load optional plugins which lazy.nvim will load automatically
           ${stable-pkgs.lib.concatMapStringsSep "\n" (
-            plugin: "ln -vsfT ${plugin} $out/pack/${package-name}/opt/${stable-pkgs.lib.getName plugin}"
-          ) neovim-optPlugins}
+              plugin: "ln -vsfT ${plugin} $out/pack/${package-name}/opt/${stable-pkgs.lib.getName plugin}"
+            )
+            neovim-optPlugins}
         '';
-      in
-      {
+      in {
         packages.default = wrappers.lib.wrapPackage rec {
           pkgs = stable-pkgs;
           package = stable-pkgs.neovim-unwrapped;
           exePath = nixpkgs.lib.getExe package;
           binName = builtins.baseNameOf exePath;
-          runtimeInputs =
-            with stable-pkgs;
+          runtimeInputs = with stable-pkgs;
             [
               # Packages that plugins depends on
               lazygit # <- snacks.nvim
@@ -121,7 +119,7 @@
               zls
 
               # Formatters Packages
-              nixfmt-rfc-style
+              alejandra
               prettierd
               stylua
               shfmt
