@@ -32,6 +32,7 @@
           lazy-nvim
           plenary-nvim
         ];
+
         neovim-optPlugins = with stable-pkgs.vimPlugins; [
           tokyonight-nvim
           catppuccin-nvim
@@ -102,31 +103,35 @@
           package = stable-pkgs.neovim-unwrapped;
           exePath = nixpkgs.lib.getExe package;
           binName = builtins.baseNameOf exePath;
-          runtimeInputs = with stable-pkgs; [
-            # Packages that plugins depends on
-            lazygit # <- snacks.nvim
-            gh # <- snacks.nvim
+          runtimeInputs =
+            with stable-pkgs;
+            [
+              # Packages that plugins depends on
+              lazygit # <- snacks.nvim
+              gh # <- snacks.nvim
 
-            # LSP Servers Packages
-            basedpyright
-            deno
-            lua-language-server
-            marksman
-            nixd
-            nil
-            rust-analyzer
-            texlab
-            typescript-language-server
-            zls
+              # LSP Servers Packages
+              basedpyright
+              deno
+              lua-language-server
+              marksman
+              rust-analyzer
+              texlab
+              typescript-language-server
+              zls
 
-            # Formatters Packages
-            nixfmt-rfc-style
-            prettierd
-            stylua
-            shfmt
-            ruff
-            rustfmt
-          ];
+              # Formatters Packages
+              nixfmt-rfc-style
+              prettierd
+              stylua
+              shfmt
+              ruff
+              rustfmt
+            ]
+            ++ [
+              unstable-pkgs.nixd
+              unstable-pkgs.nil
+            ];
           env = {
             "NVIM_APPNAME" = "neovim";
           };
