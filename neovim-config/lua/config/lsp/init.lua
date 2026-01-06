@@ -1,6 +1,6 @@
 require("config.lsp.config.basedpyright")
 require("config.lsp.config.denols")
-require("config.lsp.config.jdt_ls")
+require("config.lsp.config.jdtls")
 require("config.lsp.config.lua_ls")
 require("config.lsp.config.marksman")
 require("config.lsp.config.nil_ls")
@@ -14,8 +14,8 @@ require("config.lsp.config.zls")
 -- needs Neovim v0.11+, as it used functions available on Neovim version >= 0.11
 vim.lsp.enable("basedpyright")
 vim.lsp.enable("denols")
-vim.lsp.enable("java-language-server")
 vim.lsp.enable("lua_ls")
+vim.lsp.enable("jtdls")
 vim.lsp.enable("marksman")
 vim.lsp.enable("nil_ls")
 vim.lsp.enable("nixd")
@@ -28,7 +28,6 @@ vim.lsp.enable("zls")
 vim.lsp.inlay_hint.enable(true)
 
 --  This function gets run when an LSP attaches to a particular buffer.
-
 vim.api.nvim_create_autocmd({ "LspAttach" }, {
 	group = vim.api.nvim_create_augroup("buf-lsp-attach", { clear = true }),
 	callback = function()
