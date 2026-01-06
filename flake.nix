@@ -96,7 +96,7 @@
             )
             neovim-optPlugins}
         '';
-      in {
+      in rec {
         packages.default = wrappers.lib.wrapPackage rec {
           pkgs = stable-pkgs;
           package = stable-pkgs.neovim-unwrapped;
@@ -148,6 +148,7 @@
             inherit neovim-packages;
           };
         };
+        packages.nixvim = packages.default;
       }
     );
 }
