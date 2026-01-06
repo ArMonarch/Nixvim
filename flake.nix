@@ -99,10 +99,10 @@
       in rec {
         packages.default = wrappers.lib.wrapPackage rec {
           pkgs = stable-pkgs;
-          package = stable-pkgs.neovim-unwrapped;
+          package = pkgs.neovim-unwrapped;
           exePath = nixpkgs.lib.getExe package;
           binName = builtins.baseNameOf exePath;
-          runtimeInputs = with stable-pkgs;
+          runtimeInputs = with pkgs;
             [
               # Packages that plugins depends on
               lazygit # <- snacks.nvim
@@ -111,6 +111,7 @@
               # LSP Servers Packages
               basedpyright
               deno
+              jdt-language-server
               lua-language-server
               marksman
               rust-analyzer
