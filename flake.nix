@@ -2,154 +2,37 @@
   description = "A Nix Flake of Neovim Wrapper";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+
+    # defines system that this flake supports
+    systems.url = "github:nix-systems/default-linux";
+
+    # Powered by
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
+
     wrappers = {
       url = "github:lassulus/wrappers";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = {
-    nixpkgs,
-    nixpkgs-unstable,
-    flake-utils,
-    wrappers,
-    ...
-  }:
-    flake-utils.lib.eachDefaultSystem (
-      system: let
-        package-name = "neovim";
-        stable-pkgs = import nixpkgs {inherit system;};
-        unstable-pkgs = import nixpkgs-unstable {inherit system;};
+  outputs = {flake-parts, ...} @ inputs:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      # Systems for which attributes of perSystem will be built.
+      systems = import inputs.systems;
 
-        # flag to set neovim transparent colorscheme
-        neovim-transparent-theme = false;
-
-        neovim-startPlugins = with stable-pkgs.vimPlugins; [
-          lazy-nvim
-          plenary-nvim
-        ];
-
-        neovim-optPlugins = with stable-pkgs.vimPlugins; [
-          tokyonight-nvim
-          catppuccin-nvim
-          rose-pine
-
-          blink-cmp
-          conform-nvim
-          gitsigns-nvim
-          lazydev-nvim
-          lualine-nvim
-          noice-nvim
-          nui-nvim # <- noice-nvim
-          mini-icons
-          mini-pairs
-          nvim-treesitter
-          plenary-nvim
-          snacks-nvim
-          smear-cursor-nvim
-          todo-comments-nvim
-          trouble-nvim
-          which-key-nvim
-
-          (stable-pkgs.stdenvNoCC.mkDerivation {
-            name = "lualine-pretty-path";
-            src = stable-pkgs.fetchFromGitHub {
-              owner = "bwpge";
-              repo = "lualine-pretty-path";
-              rev = "852cb06f3562bced4776a924e56a9e44d0ce634f";
-              hash = "sha256-Ieho+EruCPW4829+qQ3cdfc+wZQ2CFd16YtcTwUAnKg=";
-            };
-            phases = ["installPhase"];
-            installPhase = "cp -r $src $out";
-          })
-        ];
-
-        foldPlugins = builtins.foldl' (
-          acc: next: acc ++ [next] ++ (foldPlugins (next.dependencies or []))
-        ) [];
-        neovim-treesitter-grammers = with unstable-pkgs.vimPlugins; [nvim-treesitter.withAllGrammars];
-
-        neovim-packages = stable-pkgs.runCommandLocal "neovim-packages" {} ''
-          mkdir -p $out/pack/${package-name}/{start,opt}
-          ln -vsfT ${./neovim-config} $out/pack/${package-name}/start/neovim-config
-
-          # necessary packages should be loaded at start i.e. mainly plugins manager and its helper package
-          ${stable-pkgs.lib.concatMapStringsSep "\n" (
-              plugin: "ln -vsfT ${plugin} $out/pack/${package-name}/start/${stable-pkgs.lib.getName plugin}"
-            )
-            neovim-startPlugins}
-
-          # load the treesitter parsers into one folder and append that folder to
-          # vim runtimepath in the lua config as lazy.nvim resets runtimepath.
-          mkdir -p $out/pack/${package-name}/opt/treesitter/parser
-          ${stable-pkgs.lib.concatMapStringsSep "\n" (plugin: ''
-            for so in ${plugin}/parser/*.so; do
-              ln -vsfT "$so" "$out/pack/${package-name}/opt/treesitter/parser/$(basename "$so")"
-            done
-          '') (stable-pkgs.lib.unique (foldPlugins neovim-treesitter-grammers))}
-
-          # load optional plugins which lazy.nvim will load automatically
-          ${stable-pkgs.lib.concatMapStringsSep "\n" (
-              plugin: "ln -vsfT ${plugin} $out/pack/${package-name}/opt/${stable-pkgs.lib.getName plugin}"
-            )
-            neovim-optPlugins}
-        '';
-      in rec {
-        packages.default = wrappers.lib.wrapPackage rec {
-          pkgs = stable-pkgs;
-          package = pkgs.neovim-unwrapped;
-          exePath = nixpkgs.lib.getExe package;
-          binName = builtins.baseNameOf exePath;
-          runtimeInputs = with pkgs;
-            [
-              # Packages that plugins depends on
-              lazygit # <- snacks.nvim
-              gh # <- snacks.nvim
-
-              # LSP Servers Packages
-              basedpyright
-              deno
-              jdt-language-server
-              lua-language-server
-              marksman
-              rust-analyzer
-              texlab
-              typescript-language-server
-              zls
-
-              # Formatters Packages
-              alejandra
-              prettierd
-              stylua
-              shfmt
-              ruff
-              rustfmt
-            ]
-            ++ [
-              unstable-pkgs.nixd
-              unstable-pkgs.nil
-            ];
-          env = {
-            "NVIM_APPNAME" = "neovim";
-          };
-          flags = {
-            "-u" = "NORC";
-            "--cmd" = ''
-              set packpath^=${neovim-packages} |
-              set runtimepath^=${neovim-packages} |
-              let g:neovim_plugins='${neovim-packages}/pack/neovim/opt' |
-              let g:neovim_treesitter_parsers='${neovim-packages}/pack/neovim/opt/treesitter' |
-              let g:neovim_transparent_theme='${builtins.toString neovim-transparent-theme}'
-            '';
-          };
-          flagSeparator = " ";
-          passthru = {
-            inherit neovim-packages;
-          };
+      perSystem = {
+        pkgs,
+        lib,
+        ...
+      }: rec {
+        packages.default = pkgs.callPackage ./default.nix {
+          inherit pkgs lib;
+          wrappers = inputs.wrappers;
         };
         packages.nixvim = packages.default;
-      }
-    );
+      };
+    };
 }
