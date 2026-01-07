@@ -25,6 +25,7 @@
     lazydev-nvim
     lualine-nvim
     noice-nvim
+    nvim-jdtls
     nui-nvim # <- noice-nvim
     mini-icons
     mini-pairs

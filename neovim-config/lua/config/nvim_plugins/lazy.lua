@@ -16,6 +16,7 @@ local lazyOptions = {
 			"lewis6991",
 			"MeanderingProgrammer",
 			"MunifTanjim",
+			"mfussenegger",
 			"nvim-lua",
 			"nvim-lualine",
 			"nvim-treesitter",
@@ -152,6 +153,9 @@ require("lazy").setup({
 
 	-- whick-key.nvim config
 	{ import = "config.nvim_plugins.which-key" },
+
+	-- configure jdtls for neovim
+	{ import = "config.nvim_plugins.nvim-jdtls" },
 }, lazyOptions)
 
 -- set colorscheme
