@@ -1,6 +1,6 @@
 require("config.lsp.config.basedpyright")
 require("config.lsp.config.denols")
-require("config.lsp.config.jdtls")
+require("config.lsp.config.jtdls")
 require("config.lsp.config.lua_ls")
 require("config.lsp.config.marksman")
 require("config.lsp.config.nil_ls")

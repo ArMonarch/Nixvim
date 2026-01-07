@@ -71,7 +71,7 @@ local root_markers2 = {
 }
 
 ---@type vim.lsp.Config
-local jdtls_config = {
+local jtdls_config = {
 	---@param dispatchers? vim.lsp.rpc.Dispatchers
 	---@param config vim.lsp.ClientConfig
 	cmd = function(dispatchers, config)
@@ -119,4 +119,4 @@ local jdtls_config = {
 	},
 }
 
-vim.lsp.config("java-language-server", jdtls_config)
+vim.lsp.config("jtdls", jtdls_config)
