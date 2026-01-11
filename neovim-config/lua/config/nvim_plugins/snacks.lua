@@ -21,8 +21,8 @@ return {
 			enabled = true,
 			doc = {
 				inline = false,
-				max_width = 16,
-				max_height = 9,
+				max_width = 32,
+				max_height = 18,
 			},
 		},
 		picker = {
