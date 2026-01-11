@@ -17,7 +17,14 @@ return {
 		explorer = { enabled = true },
 		indent = { enabled = true },
 		input = { enabled = true },
-		image = { enabled = true },
+		image = {
+			enabled = true,
+			doc = {
+				inline = false,
+				max_width = 16,
+				max_height = 9,
+			},
+		},
 		picker = {
 			enabled = true,
 			layout = { preset = "telescope" },

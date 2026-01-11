@@ -92,6 +92,9 @@ in
       # Packages that plugins depends on
       lazygit # <- snacks.nvim
       gh # <- snacks.nvim
+      imagemagick
+      ghostscript
+      tectonic
 
       # LSP Servers Packages
       basedpyright
