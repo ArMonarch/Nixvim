@@ -12,6 +12,7 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
+    # module for wrapping neovim
     wrappers = {
       url = "github:lassulus/wrappers";
       inputs.nixpkgs.follows = "nixpkgs";

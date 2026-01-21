@@ -37,10 +37,11 @@ return {
 			lua = { "stylua" },
 			nix = { "alejandra" },
 			sh = { "shfmt" },
-			python = { "ruff" },
+			python = { "black" },
 			rust = { "rustfmt" },
 			javascript = { "prettierd" },
 			typescript = { "prettierd" },
+			zig = { "zigfmt" },
 		},
 	},
 }

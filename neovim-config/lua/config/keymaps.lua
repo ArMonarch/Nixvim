@@ -12,7 +12,6 @@ map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = tru
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
---
 --  See `:help wincmd` for a list of all window commands
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
@@ -32,13 +31,14 @@ map("n", "<S-h>", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 map("n", "[b", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
 map("n", "]b", "<cmd>bnext<cr>", { desc = "Next Buffer" })
-map("n", "<leader>bD", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
 
 -- lazy
 map("n", "<leader>l", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
 -- Save File
 map({ "n", "i" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
+-- quit
+map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
 
 -- Open Netrw explorer
 map({ "n" }, "<leader>se", "<cmd>Ex<cr>", { desc = "Netrw File Explorer" })
@@ -62,9 +62,6 @@ map("n", "<leader>uI", function()
 	vim.api.nvim_input("I")
 end, { desc = "Inspect Tree" })
 
--- quit
-map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
-
 -- location list
 map("n", "<leader>xl", function()
 	local success, err = pcall(vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 and vim.cmd.lclose or vim.cmd.lopen)
@@ -82,8 +79,6 @@ map("n", "<leader>xq", function()
 end, { desc = "Quickfix List" })
 
 -- windows
-map("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", remap = true })
-map("n", "<leader>|", "<C-W>v", { desc = "Split Window Right", remap = true })
 map("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
 
 -- folds keymaps
@@ -97,12 +92,12 @@ local diagnostic_goto = function(next, severity)
 		go({ severity = severity })
 	end
 end
--- stylua: ignore
+
 map("n", "<C-w>d", function()
-  vim.diagnostic.open_float({
-				border = "single",
-				max_height = 15,
-				max_width = 80,
+	vim.diagnostic.open_float({
+		border = "single",
+		max_height = 15,
+		max_width = 80,
 	})
 end, { desc = "Line Diagnostics", remap = true })
 
@@ -128,3 +123,32 @@ vim.keymap.del("n", "grn")
 vim.keymap.del("n", "gri")
 vim.keymap.del("n", "grr")
 vim.keymap.del("n", "grt")
+
+-- toggle options
+if vim.lsp.inlay_hint then
+	Snacks.toggle.inlay_hints():map("<leader>uh")
+end
+
+-- Snacks toggle options keymap
+Snacks.toggle.zoom():map("<leader>wm"):map("<leader>uZ")
+Snacks.toggle.zen():map("<leader>uz")
+Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
+Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
+Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
+Snacks.toggle.diagnostics():map("<leader>ud")
+Snacks.toggle.line_number():map("<leader>ul")
+Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
+
+-- terminal keymaps
+map("n", "<leader>tt", function()
+	Snacks.terminal.toggle()
+end, { desc = "Toggle Terminal", remap = true })
+map("v", "<leader>tt", function()
+	Snacks.terminal.toggle()
+end, { desc = "Toggle Terminal", remap = true })
+map("n", "<leader>tT", function()
+	Snacks.terminal.toggle("exec fish", { cwd = vim.fn.expand("%:p:h") })
+end, { desc = "Toggle Scratch Terminal", remap = true })
+map("v", "<leader>tT", function()
+	Snacks.terminal.toggle("exec fish", { cwd = vim.fn.expand("%:p:h") })
+end, { desc = "Toggle Scratch Terminal", remap = true })

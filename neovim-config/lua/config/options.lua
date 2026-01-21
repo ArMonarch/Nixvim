@@ -52,8 +52,8 @@ vim.opt.smartindent = true -- Insert indents automatically
 vim.opt.wrap = false
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
-vim.opt.sidescrolloff = 8 -- Columns of context
+vim.opt.scrolloff = 5
+vim.opt.sidescrolloff = 7 -- Columns of context
 
 -- Apperance
 vim.opt.number = true

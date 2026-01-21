@@ -13,7 +13,7 @@ local lsp_hishlight = vim.api.nvim_create_augroup("lsp-hishlight", { clear = fal
 vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 	desc = "Highlight refrences of the word under the cursor",
 	group = lsp_hishlight,
-	pattern = { "*.c", "*.h", "*.py", "*.rs", "*.lua", "*.nix", "*.js", "*.ts", "*.jsx", "*.tsx", "*.zig" },
+	pattern = { "*.c", "*.h", "*.py", "*.rs", "*.lua", "*.nix", "*.java", "*.js", "*.ts", "*.jsx", "*.tsx", "*.zig" },
 	callback = function()
 		vim.lsp.buf.document_highlight()
 	end,
@@ -23,7 +23,7 @@ vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
 	desc = "Highlight refrences of the word under the cursor",
 	group = lsp_hishlight,
-	pattern = { "*.c", "*.h", "*.py", "*.rs", "*.lua", "*.nix", "*.js", "*.ts", "*.jsx", "*.tsx", "*.zig" },
+	pattern = { "*.c", "*.h", "*.py", "*.rs", "*.lua", "*.nix", "*.java", "*.js", "*.ts", "*.jsx", "*.tsx", "*.zig" },
 	callback = function()
 		vim.lsp.buf.clear_references()
 	end,
@@ -91,12 +91,11 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- wrap and check for spell in text filetypes
+-- !wrap and check for spell in text filetypes
 vim.api.nvim_create_autocmd("FileType", {
 	group = vim.api.nvim_create_augroup("wrap_spell", { clear = true }),
 	pattern = { "text", "plaintex", "typst", "gitcommit", "markdown" },
 	callback = function()
-		vim.opt_local.wrap = true
 		vim.opt_local.spell = true
 	end,
 })

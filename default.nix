@@ -11,7 +11,6 @@
 
   neovim-startPlugins = with pkgs.vimPlugins; [
     lazy-nvim
-    plenary-nvim
   ];
 
   neovim-optPlugins = with pkgs.vimPlugins; [
@@ -54,6 +53,7 @@
 
   foldPlugins = builtins.foldl' (
     acc: next: acc ++ [next] ++ (foldPlugins (next.dependencies or []))
+    # acc: next: acc ++ [next]
   ) [];
   neovim-treesitter-grammers = with pkgs.vimPlugins; [nvim-treesitter.withAllGrammars];
 
@@ -62,25 +62,34 @@
     ln -vsfT ${./neovim-config} $out/pack/${package-name}/start/neovim-config
 
     # necessary packages should be loaded at start i.e. mainly plugins manager and its helper package
-    ${pkgs.lib.concatMapStringsSep "\n" (
+    ${
+      pkgs.lib.concatMapStringsSep "\n" (
         plugin: "ln -vsfT ${plugin} $out/pack/${package-name}/start/${pkgs.lib.getName plugin}"
       )
-      neovim-startPlugins}
-
-    # load the treesitter parsers into one folder and append that folder to
-    # vim runtimepath in the lua config as lazy.nvim resets runtimepath.
-    mkdir -p $out/pack/${package-name}/opt/treesitter/parser
-    ${pkgs.lib.concatMapStringsSep "\n" (plugin: ''
-      for so in ${plugin}/parser/*.so; do
-        ln -vsfT "$so" "$out/pack/${package-name}/opt/treesitter/parser/$(basename "$so")"
-      done
-    '') (pkgs.lib.unique (foldPlugins neovim-treesitter-grammers))}
+      neovim-startPlugins
+    }
 
     # load optional plugins which lazy.nvim will load automatically
-    ${pkgs.lib.concatMapStringsSep "\n" (
+    ${
+      pkgs.lib.concatMapStringsSep "\n" (
         plugin: "ln -vsfT ${plugin} $out/pack/${package-name}/opt/${pkgs.lib.getName plugin}"
       )
-      neovim-optPlugins}
+      neovim-optPlugins
+    }
+  '';
+
+  # neovim searches treesitter parsers from runtime path/parser/language.so
+  # so we append this neovim-treesitter path to runtime path after loading lazy plugins
+  # as it resets runtime path
+  neovim-treesitter = pkgs.runCommandLocal "neovim-treesitter" {} ''
+    # load the treesitter parsers into one folder and append that folder to
+    # vim runtimepath in the lua config as lazy.nvim resets runtimepath.
+    mkdir -p $out/pack/${package-name}/treesitter/parser
+    ${pkgs.lib.concatMapStringsSep "\n" (plugin: ''
+      for so in ${plugin}/parser/*.so; do
+      ln -vsfT "$so" "$out/pack/${package-name}/treesitter/parser/$(basename "$so")"
+      done
+    '') (pkgs.lib.unique (foldPlugins neovim-treesitter-grammers))}
   '';
 in
   wrappers.lib.wrapPackage rec {
@@ -114,19 +123,21 @@ in
       prettierd
       stylua
       shfmt
-      ruff
+      black
       rustfmt
     ];
     env = {
-      "NVIM_APPNAME" = "neovim";
+      "NVIM_APPNAME" = "nixvim";
     };
     flags = {
       "-u" = "NORC";
       "--cmd" = ''
-        set packpath^=${neovim-packages} |
+        set packpath=${neovim-packages} |
+        set packpath^=${pkgs.neovim-unwrapped}/share/nvim/runtime |
         set runtimepath^=${neovim-packages} |
+        let g:neovim_packages='${neovim-packages}' |
         let g:neovim_plugins='${neovim-packages}/pack/neovim/opt' |
-        let g:neovim_treesitter_parsers='${neovim-packages}/pack/neovim/opt/treesitter' |
+        let g:neovim_treesitter_parsers='${neovim-treesitter}/pack/neovim/treesitter' |
         let g:neovim_transparent_theme='${builtins.toString neovim-transparent-theme}'
       '';
     };

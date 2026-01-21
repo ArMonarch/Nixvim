@@ -84,7 +84,7 @@ require("lazy").setup({
 	{
 		"nvim-lua/plenary.nvim",
 		name = "plenary.nvim",
-		lazy = true,
+		lazy = false,
 	},
 	{
 		"folke/tokyonight.nvim",
@@ -162,8 +162,7 @@ require("lazy").setup({
 }, lazyOptions)
 
 -- set colorscheme
-vim.cmd.colorscheme("catppuccin-mocha")
-
+vim.cmd.colorscheme("tokyonight-moon")
 -- load netrw file explorer as lazy.nvim disables it
 vim.cmd.packadd("netrw")
 
