@@ -43,12 +43,5 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
 				max_width = 80,
 			})
 		end, "Code Hover")
-		map({ "n" }, "<C-k>", function()
-			vim.lsp.buf.hover({
-				border = "single",
-				max_height = 15,
-				max_width = 80,
-			})
-		end, "Code Hover")
 	end,
 })
