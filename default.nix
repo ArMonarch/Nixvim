@@ -20,6 +20,7 @@
 
     blink-cmp
     conform-nvim
+    friendly-snippets
     gitsigns-nvim
     lazydev-nvim
     lualine-nvim
@@ -33,6 +34,7 @@
     snacks-nvim
     smear-cursor-nvim
     todo-comments-nvim
+    ts-comments-nvim
     trouble-nvim
     which-key-nvim
 
@@ -102,8 +104,6 @@ in
       lazygit # <- snacks.nvim
       gh # <- snacks.nvim
       imagemagick
-      ghostscript
-      tectonic
 
       # LSP Servers Packages
       basedpyright

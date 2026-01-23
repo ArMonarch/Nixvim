@@ -7,8 +7,8 @@ return {
 	opts = {
 		lsp = {
 			progress = { enabled = true },
-			hover = { enabled = false },
-			signature = { enabled = false },
+			hover = { enabled = true },
+			signature = { enabled = true },
 		},
 		routes = {
 			{

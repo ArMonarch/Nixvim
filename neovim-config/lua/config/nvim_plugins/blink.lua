@@ -1,6 +1,7 @@
 return {
 	"saghen/blink.cmp",
 	name = "blink.cmp",
+	dependencies = { "friendly-snippets" },
 	event = "InsertEnter",
 	opts = {
 		keymap = {

@@ -21,6 +21,7 @@ local lazyOptions = {
 			"nvim-lualine",
 			"nvim-treesitter",
 			"rose-pine",
+			"rafamadriz",
 			"saghen",
 			"sphamba",
 			"stevearc",
@@ -47,6 +48,7 @@ local lazyOptions = {
 			},
 		},
 	},
+	rocks = { enabled = false },
 	ui = {
 		-- If you are using a Nerd Font: set icons to an empty table which will use the
 		-- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
@@ -118,6 +120,9 @@ require("lazy").setup({
 	-- conform.nvim formatter configuration
 	{ import = "config.nvim_plugins.conform" },
 
+	--friendly snippets cinfiguration
+	{ import = "config.nvim_plugins.friendly-snippets" },
+
 	-- gitsigns.nvim configuration
 	{ import = "config.nvim_plugins.gitsigns" },
 
@@ -145,6 +150,9 @@ require("lazy").setup({
 	-- todo-comments configuration
 	{ import = "config.nvim_plugins.todo-comments" },
 
+	-- ts-comments configuration
+	{ import = "config.nvim_plugins.ts-comments" },
+
 	-- trouble configuration
 	{ import = "config.nvim_plugins.trouble" },
 
@@ -165,47 +173,3 @@ require("lazy").setup({
 vim.cmd.colorscheme("tokyonight-moon")
 -- load netrw file explorer as lazy.nvim disables it
 vim.cmd.packadd("netrw")
-
--- setup jdtls to run on every java file with autocommand on FileType 'java'
-local function start_jtdls_client()
-	-- configure jdtls
-	local config = {
-		name = "jdtls",
-
-		-- `cmd` defines the executable to launch eclipse.jdt.ls.
-		-- `jdtls` must be available in $PATH and you must have Python3.9 for this to work.
-		--
-		-- As alternative you could also avoid the `jdtls` wrapper and launch
-		-- eclipse.jdt.ls via the `java` executable
-		-- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
-		cmd = { "jdtls" },
-
-		-- `root_dir` must point to the root of your project.
-		-- See `:help vim.fs.root`
-		root_dir = vim.fs.root(0, { "gradlew", ".git", "mvnw" }),
-
-		-- Here you can configure eclipse.jdt.ls specific settings
-		-- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
-		-- for a list of options
-		settings = {
-			java = {},
-		},
-
-		-- This sets the `initializationOptions` sent to the language server
-		-- If you plan on using additional eclipse.jdt.ls plugins like java-debug
-		-- you'll need to set the `bundles`
-		--
-		-- See https://codeberg.org/mfussenegger/nvim-jdtls#java-debug-installation
-		--
-		-- If you don't plan on any eclipse.jdt.ls plugins you can remove this
-		init_options = {
-			bundles = {},
-		},
-	}
-	require("jdtls").start_or_attach(config)
-end
-
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "java",
-	callback = start_jtdls_client,
-})
