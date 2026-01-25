@@ -45,4 +45,4 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
 })
 
 -- configuration for jdtls through nvim_jdtls and import the configuration
-require("neovim-config.lua.config.lsp.jdtls")
+require("config.lsp.jdtls")
