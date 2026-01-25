@@ -33,16 +33,19 @@ local config = {
 	},
 }
 
-local configure_jdtls = function()
-	if not vim.fn.executable("jdtls") then
-		require("jdtls").start_or_attach(config)
-	else
-		vim.notify("The language server `jdtls` is either not installed, missing from PATH, or not executable", "warn")
+local run_jdtls = function()
+	if vim.fn.executable("jdtls") == 0 then
+		vim.notify(
+			"The language server `jdtls` is either not installed, missing from PATH, or not executable.",
+			"error"
+		)
+		return
 	end
+	require("jdtls").start_or_attach(config)
 end
 
 -- setup jdtls to run on every java file with autocommand on FileType 'java'
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "java" },
-	callback = configure_jdtls,
+	callback = run_jdtls,
 })

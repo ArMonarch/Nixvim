@@ -112,7 +112,6 @@ in
       marksman
       nixd
       nil
-      rust-analyzer
       texlab
       typescript-language-server
       zls
