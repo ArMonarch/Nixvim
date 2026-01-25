@@ -112,7 +112,6 @@ in
       marksman
       nixd
       nil
-      texlab
       typescript-language-server
       zls
 

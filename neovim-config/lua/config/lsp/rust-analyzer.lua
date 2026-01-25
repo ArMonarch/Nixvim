@@ -184,11 +184,21 @@ local run_rust_analyser = function()
 		return
 	end
 
-	vim.lsp.config("rust-analyzer", rust_analyzer_config)
-	vim.lsp.enable("rust-analyzer")
+	-- check if rustc is installed or in path
+	if vim.fn.executable("rustc") == 0 then
+		vim.notify(
+			"The language server `rust-analyzer` requires `rustc` which is either not installed, missing from PATH, or not executable.",
+			"error"
+		)
+		return
+	end
+
+	-- vim.lsp.config("rust-analyzer", rust_analyzer_config)
+	-- vim.lsp.enable("rust-analyzer")
+	vim.lsp.start(rust_analyzer_config)
 end
 
--- setup jdtls to run on every java file with autocommand on FileType 'java'
+-- setup rust-analyzer to run on every rust file with autocommand on FileType 'rust'
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "rust" },
 	callback = run_rust_analyser,

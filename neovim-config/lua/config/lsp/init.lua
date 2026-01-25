@@ -5,7 +5,6 @@ require("config.lsp.config.marksman")
 require("config.lsp.config.nil_ls")
 require("config.lsp.config.nixd")
 require("config.lsp.config.ts_ls")
-require("config.lsp.config.texlab")
 require("config.lsp.config.zls")
 
 -- NOTE: Enable Language Servers here,
@@ -17,7 +16,6 @@ vim.lsp.enable("marksman")
 vim.lsp.enable("nil_ls")
 vim.lsp.enable("nixd")
 vim.lsp.enable("ts_ls")
-vim.lsp.enable("texlab")
 vim.lsp.enable("zls")
 
 -- Enable Inlay Hints
@@ -46,3 +44,5 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
 require("config.lsp.jdtls")
 -- import the configuration for rust-analyzer
 require("config.lsp.rust-analyzer")
+-- import the configuration for texlab
+require("config.lsp.texlab")

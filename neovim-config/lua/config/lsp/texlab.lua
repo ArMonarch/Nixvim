@@ -131,7 +131,8 @@ local function buf_change_env(client, bufnr)
 end
 
 ---@type vim.lsp.Config
-local texlab = {
+local config = {
+	name = "texlab",
 	cmd = { "texlab" },
 	filetypes = { "tex", "plaintex", "bib" },
 	root_markers = { ".git", ".latexmkrc", "latexmkrc", ".texlabroot", "texlabroot", "Tectonic.toml" },
@@ -184,4 +185,19 @@ local texlab = {
 	end,
 }
 
-vim.lsp.config("texlab", texlab)
+local run_texlab = function()
+	if vim.fn.executable("texlab") == 0 then
+		vim.notify(
+			"The language server `texlab` is either not installed, missing from PATH, or not executable.",
+			"error"
+		)
+		return
+	end
+	vim.lsp.start(config)
+end
+
+-- setup texlab to run on every tex file with autocommand on FileType
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "tex", "plaintex", "bib" },
+	callback = run_texlab,
+})
