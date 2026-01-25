@@ -12,7 +12,7 @@ local config = {
 
 	-- `root_dir` must point to the root of your project.
 	-- See `:help vim.fs.root`
-	root_dir = vim.fs.root(0, { "gradlew", ".git", "mvnw" }),
+	root_dir = vim.fs.root(0, { "gradlew", "mvnw", "pom.xml", ".git" }),
 
 	-- Here you can configure eclipse.jdt.ls specific settings
 	-- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
@@ -33,17 +33,16 @@ local config = {
 	},
 }
 
+local configure_jdtls = function()
+	if not vim.fn.executable("jdtls") then
+		require("jdtls").start_or_attach(config)
+	else
+		vim.notify("The language server `jdtls` is either not installed, missing from PATH, or not executable", "warn")
+	end
+end
+
 -- setup jdtls to run on every java file with autocommand on FileType 'java'
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = "java",
-	callback = function()
-		if not vim.fn.executable("jdtls") then
-			require("jdtls").start_or_attach(config)
-		else
-			vim.notify(
-				"The language server `jdtls` is either not installed, missing from PATH, or not executable",
-				"warn"
-			)
-		end
-	end,
+	pattern = "*.java",
+	callback = configure_jdtls,
 })
