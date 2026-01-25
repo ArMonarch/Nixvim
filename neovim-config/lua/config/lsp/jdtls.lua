@@ -43,6 +43,6 @@ end
 
 -- setup jdtls to run on every java file with autocommand on FileType 'java'
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = "*.java",
+	pattern = { "*.java" },
 	callback = configure_jdtls,
 })
