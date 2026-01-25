@@ -131,7 +131,7 @@ local function buf_change_env(client, bufnr)
 end
 
 ---@type vim.lsp.Config
-local config = {
+local texlab_config = {
 	name = "texlab",
 	cmd = { "texlab" },
 	filetypes = { "tex", "plaintex", "bib" },
@@ -185,6 +185,8 @@ local config = {
 	end,
 }
 
+vim.lsp.config("texlab", texlab_config)
+
 local run_texlab = function()
 	if vim.fn.executable("texlab") == 0 then
 		vim.notify(
@@ -193,7 +195,13 @@ local run_texlab = function()
 		)
 		return
 	end
-	vim.lsp.start(config)
+
+	-- return if client is already connected to buffer
+	if vim.lsp.get_clients({ name = "texlab" })[1] then
+		return
+	end
+
+	vim.lsp.enable("texlab", true)
 end
 
 -- setup texlab to run on every tex file with autocommand on FileType

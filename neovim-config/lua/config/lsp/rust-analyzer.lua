@@ -165,6 +165,9 @@ local rust_analyzer_config = {
 	end,
 }
 
+-- add the rust-analyzer language server configuration
+vim.lsp.config("rust-analyzer", rust_analyzer_config)
+
 local run_rust_analyser = function()
 	-- check if rust-analyzer is installed or in path
 	if vim.fn.executable("rust-analyzer") == 0 then
@@ -193,9 +196,12 @@ local run_rust_analyser = function()
 		return
 	end
 
-	-- vim.lsp.config("rust-analyzer", rust_analyzer_config)
-	-- vim.lsp.enable("rust-analyzer")
-	vim.lsp.start(rust_analyzer_config)
+	-- return if client is already connected to buffer
+	if vim.lsp.get_clients({ name = "rust-analyzer" })[1] then
+		return
+	end
+
+	vim.lsp.enable("rust-analyzer")
 end
 
 -- setup rust-analyzer to run on every rust file with autocommand on FileType 'rust'
