@@ -108,7 +108,6 @@ in
       # LSP Servers Packages
       basedpyright
       deno
-      jdt-language-server
       lua-language-server
       marksman
       nixd
