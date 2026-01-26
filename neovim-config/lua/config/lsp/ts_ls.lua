@@ -45,6 +45,7 @@
 
 ---@type vim.lsp.Config
 local ts_ls_config = {
+	name = "ts_ls",
 	init_options = { hostInfo = "neovim" },
 	cmd = { "typescript-language-server", "--stdio" },
 	filetypes = {
@@ -154,4 +155,29 @@ local ts_ls_config = {
 	end,
 }
 
+-- add the typescript/javascript language server configuration
 vim.lsp.config("ts_ls", ts_ls_config)
+
+local run_typescript_language_server = function()
+	-- check if typescript language server is installed or in path
+	if vim.fn.executable("typescript-language-server") == 0 then
+		vim.notify(
+			"The language server `typescript-language-server` is either not installed, missing from PATH, or not executable.",
+			"error"
+		)
+		return
+	end
+
+	-- return if client is already connected to buffer
+	if vim.lsp.get_clients({ name = "ts_ls" })[1] then
+		return
+	end
+
+	vim.lsp.enable("ts_ls", true)
+end
+
+-- setup typescript-language-server to run with autocommand on FileType
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+	callback = run_typescript_language_server,
+})

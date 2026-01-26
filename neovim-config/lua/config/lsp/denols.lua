@@ -64,7 +64,8 @@ local function denols_handler(err, result, ctx, config)
 end
 
 ---@type vim.lsp.Config
-local denols = {
+local denols_config = {
+	name = "denols",
 	cmd = { "deno", "lsp" },
 	cmd_env = { NO_COLOR = true },
 	filetypes = {
@@ -128,7 +129,24 @@ local denols = {
 	end,
 }
 
-vim.g.markdown_fenced_languages = {
-	"ts=typescript",
-}
-vim.lsp.config("denols", denols)
+-- add the deno typescript/javascript language server configuration
+vim.lsp.config("denols", denols_config)
+
+local run_deno_lsp = function()
+	-- check if deno language server is installed or in path
+	if vim.fn.executable("deno") == 0 then
+		vim.notify("The language server `deno` is either not installed, missing from PATH, or not executable.", "error")
+		return
+	end
+
+	-- return if client is already connected to buffer
+	if vim.lsp.get_clients({ name = "denols" })[1] then
+		return
+	end
+end
+
+-- setup typescript-language-server to run with autocommand on FileType
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+	callback = run_deno_lsp,
+})

@@ -39,7 +39,7 @@ local run_zls = function()
 	vim.lsp.enable("zls", true)
 end
 
--- setup rust-analyzer to run on every rust file with autocommand on FileType 'rust'
+-- setup zig language server to run with autocommand on FileType event
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "zig", "zir" },
 	callback = run_zls,

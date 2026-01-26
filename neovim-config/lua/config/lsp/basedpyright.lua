@@ -24,6 +24,7 @@ end
 
 ---@type vim.lsp.Config
 local basedpyright_config = {
+	name = "basedpyright",
 	cmd = { "basedpyright-langserver", "--stdio" },
 	filetypes = { "python" },
 	root_markers = {
@@ -68,4 +69,29 @@ local basedpyright_config = {
 	end,
 }
 
+-- add the basedpyright language server configuration
 vim.lsp.config("basedpyright", basedpyright_config)
+
+local run_basedpyright = function()
+	-- check if basedpyright is installed or in path
+	if vim.fn.executable("basedpyright") == 0 then
+		vim.notify(
+			"The language server `basedpyright` is either not installed, missing from PATH, or not executable.",
+			"error"
+		)
+		return
+	end
+
+	-- return if client is already connected to buffer
+	if vim.lsp.get_clients({ name = "basedpyright" })[1] then
+		return
+	end
+
+	vim.lsp.enable("basedpyright", true)
+end
+
+-- setup basedpyright language server to run with autocommand on FileType event
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "python" },
+	callback = run_basedpyright,
+})

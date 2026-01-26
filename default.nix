@@ -106,14 +106,9 @@ in
       imagemagick
 
       # LSP Servers Packages
-      basedpyright
-      deno
       lua-language-server
-      marksman
       nixd
       nil
-      typescript-language-server
-      zls
 
       # Formatters Packages
       alejandra

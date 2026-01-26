@@ -204,7 +204,7 @@ local run_texlab = function()
 	vim.lsp.enable("texlab", true)
 end
 
--- setup texlab to run on every tex file with autocommand on FileType
+-- setup texlab to run on every tex file with autocommand on FileType event
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "tex", "plaintex", "bib" },
 	callback = run_texlab,
