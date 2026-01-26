@@ -1,1 +1,1 @@
-return { "rafamadriz/friendly-snippets", name = "friendly-snippets" }
+return { "rafamadriz/friendly-snippets", enabled = false, name = "friendly-snippets" }
