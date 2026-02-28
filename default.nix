@@ -117,7 +117,6 @@ in
       stylua
       shfmt
       black
-      rustfmt
     ];
     env = {
       "NVIM_APPNAME" = "nixvim";
