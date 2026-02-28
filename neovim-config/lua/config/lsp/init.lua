@@ -37,7 +37,7 @@ require("config.lsp.denols")
 -- configuration for jdtls through nvim_jdtls and import the configuration
 require("config.lsp.jdtls")
 -- import the configuration for odin language server
-require("coonfig.lsp.ols")
+require("config.lsp.ols")
 -- import the configuration for rust-analyzer
 require("config.lsp.rust-analyzer")
 -- import the configuration for texlab
