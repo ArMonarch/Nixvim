@@ -13,6 +13,7 @@ local lazyOptions = {
 			"catppuccin",
 			"echasnovski",
 			"folke",
+			"iamcco",
 			"lewis6991",
 			"MeanderingProgrammer",
 			"MeanderingProgrammer",
@@ -162,6 +163,9 @@ require("lazy").setup({
 
 	-- render-markdown configuration
 	{ import = "config.nvim_plugins.render-markdown" },
+
+	-- markdown preview configuration
+	{ import = "config.nvim_plugins.markdown-preview" },
 
 	-- whick-key.nvim config
 	{ import = "config.nvim_plugins.which-key" },

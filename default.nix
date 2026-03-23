@@ -32,6 +32,7 @@
     nvim-treesitter
     plenary-nvim
     render-markdown-nvim
+    markdown-preview-nvim
     snacks-nvim
     smear-cursor-nvim
     todo-comments-nvim
