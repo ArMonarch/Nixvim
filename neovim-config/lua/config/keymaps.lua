@@ -11,12 +11,9 @@ map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, 
 map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
 
 -- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---  See `:help wincmd` for a list of all window commands
-vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
-vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
-vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
-vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
+-- currently none set
+-- Use CTRL+<hjkl> to switch between windows
+-- See `:help wincmd` for a list of all window commands
 
 -- Move Lines
 map("n", "<A-j>", "<cmd>execute 'move .+' . v:count1<cr>==", { desc = "Move Down" })
@@ -86,10 +83,9 @@ map("n", "<leader>fo", "za", { desc = "Toggle Fold Under Cursor", remap = true }
 
 -- diagnostic
 local diagnostic_goto = function(next, severity)
-	local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
 	severity = severity and vim.diagnostic.severity[severity] or nil
 	return function()
-		go({ severity = severity })
+		vim.diagnostic.jump({ count = next and 1 or -1, severity = severity })
 	end
 end
 
@@ -138,17 +134,3 @@ Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leade
 Snacks.toggle.diagnostics():map("<leader>ud")
 Snacks.toggle.line_number():map("<leader>ul")
 Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
-
--- terminal keymaps
-map("n", "<leader>tt", function()
-	Snacks.terminal.toggle()
-end, { desc = "Toggle Terminal", remap = true })
-map("v", "<leader>tt", function()
-	Snacks.terminal.toggle()
-end, { desc = "Toggle Terminal", remap = true })
-map("n", "<leader>tT", function()
-	Snacks.terminal.toggle("exec fish", { cwd = vim.fn.expand("%:p:h") })
-end, { desc = "Toggle Scratch Terminal", remap = true })
-map("v", "<leader>tT", function()
-	Snacks.terminal.toggle("exec fish", { cwd = vim.fn.expand("%:p:h") })
-end, { desc = "Toggle Scratch Terminal", remap = true })
