@@ -167,10 +167,7 @@ require("lazy").setup({
 	{ import = "config.nvim_plugins.which-key" },
 
 	-- configure jdtls for neovim
-	{
-		"mfussenegger/nvim-jdtls",
-		name = "nvim-jdtls",
-	},
+	{ "mfussenegger/nvim-jdtls", name = "nvim-jdtls" },
 }, lazyOptions)
 
 -- set colorscheme
