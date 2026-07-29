@@ -91,6 +91,32 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- start treesitter for any filetype that has a parser available
+--
+-- neovim only bundles parsers for c, lua, markdown, query, vim and vimdoc, and does
+-- not enable highlighting by default. every other parser and its queries come from
+-- nix (see `neovim-treesitter` in default.nix) and are appended to runtimepath in
+-- config/init.lua, so all that is left to do is start treesitter per buffer.
+-- folding is handled by `foldexpr` in config/options.lua, and incremental selection
+-- is built in since neovim 0.12 (see `:help v_an`).
+vim.api.nvim_create_autocmd("FileType", {
+	desc = "Start treesitter for any filetype that has a parser available",
+	group = vim.api.nvim_create_augroup("treesitter_start", { clear = true }),
+	callback = function(event)
+		local lang = vim.treesitter.language.get_lang(vim.bo[event.buf].filetype)
+		if not lang then
+			return
+		end
+
+		local ok, added = pcall(vim.treesitter.language.add, lang)
+		if not ok or not added then
+			return
+		end
+
+		vim.treesitter.start(event.buf, lang)
+	end,
+})
+
 -- !wrap and check for spell in text filetypes
 vim.api.nvim_create_autocmd("FileType", {
 	group = vim.api.nvim_create_augroup("wrap_spell", { clear = true }),

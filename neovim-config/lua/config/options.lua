@@ -6,7 +6,6 @@ vim.g.localleader = " "
 
 -- Set to true if Nerd Font is installed and selected in the terminal
 vim.g.have_nerd_font = true
-
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 -- search
 vim.opt.incsearch = true
@@ -61,7 +60,7 @@ vim.opt.relativenumber = true
 vim.opt.termguicolors = true
 vim.opt.breakindent = true
 
--- nvim-treesitter fold
+-- treesitter fold
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 vim.opt.foldenable = true

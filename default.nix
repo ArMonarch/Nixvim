@@ -29,7 +29,6 @@
     nui-nvim # <- noice-nvim
     mini-icons
     mini-pairs
-    nvim-treesitter
     plenary-nvim
     render-markdown-nvim
     markdown-preview-nvim
@@ -57,7 +56,6 @@
 
   foldPlugins = builtins.foldl' (
     acc: next: acc ++ [next] ++ (foldPlugins (next.dependencies or []))
-    # acc: next: acc ++ [next]
   ) [];
   neovim-treesitter-grammers = with pkgs.vimPlugins; [nvim-treesitter.withAllGrammars];
 
@@ -82,16 +80,27 @@
     }
   '';
 
-  # neovim searches treesitter parsers from runtime path/parser/language.so
-  # so we append this neovim-treesitter path to runtime path after loading lazy plugins
-  # as it resets runtime path
+  # neovim searches treesitter parsers from runtime path/parser/language.so and the
+  # matching highlight/indent/fold queries from runtime path/queries/language/, so we
+  # append this neovim-treesitter path to runtime path after loading lazy plugins
+  # as it resets runtime path.
+  # nvim-treesitter's `main` branch splits these into separate derivations -- one
+  # `-grammar-<lang>` (only parser/) and one `-queries-<lang>` (only queries/) per
+  # language -- hence the two loops below.
   neovim-treesitter = pkgs.runCommandLocal "neovim-treesitter" {} ''
-    # load the treesitter parsers into one folder and append that folder to
-    # vim runtimepath in the lua config as lazy.nvim resets runtimepath.
-    mkdir -p $out/pack/${package-name}/treesitter/parser
+    # load the treesitter parsers and queries into one folder and append that folder
+    # to vim runtimepath in the lua config as lazy.nvim resets runtimepath.
+    mkdir -p $out/pack/${package-name}/treesitter/{parser,queries}
     ${pkgs.lib.concatMapStringsSep "\n" (plugin: ''
       for so in ${plugin}/parser/*.so; do
-      ln -vsfT "$so" "$out/pack/${package-name}/treesitter/parser/$(basename "$so")"
+        if [ -e "$so" ]; then
+          ln -vsfT "$so" "$out/pack/${package-name}/treesitter/parser/$(basename "$so")"
+        fi
+      done
+      for query in ${plugin}/queries/*; do
+        if [ -e "$query" ]; then
+          ln -vsfT "$query" "$out/pack/${package-name}/treesitter/queries/$(basename "$query")"
+        fi
       done
     '') (pkgs.lib.unique (foldPlugins neovim-treesitter-grammers))}
   '';
@@ -100,7 +109,7 @@ in
     inherit pkgs;
     package = pkgs.neovim-unwrapped;
     exePath = lib.getExe package;
-    binName = builtins.baseNameOf exePath;
+    binName = baseNameOf exePath;
     runtimeInputs = with pkgs; [
       # Packages that plugins depends on
       lazygit # <- snacks.nvim
@@ -114,10 +123,8 @@ in
 
       # Formatters Packages
       alejandra
-      prettierd
       stylua
       shfmt
-      black
     ];
     env = {
       "NVIM_APPNAME" = "nixvim";
@@ -131,7 +138,7 @@ in
         let g:neovim_packages='${neovim-packages}' |
         let g:neovim_plugins='${neovim-packages}/pack/neovim/opt' |
         let g:neovim_treesitter_parsers='${neovim-treesitter}/pack/neovim/treesitter' |
-        let g:neovim_transparent_theme='${builtins.toString neovim-transparent-theme}'
+        let g:neovim_transparent_theme='${toString neovim-transparent-theme}'
       '';
     };
     flagSeparator = " ";

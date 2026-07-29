@@ -48,7 +48,7 @@ nix run .#nixvim
 | Utilities | snacks.nvim | File picker, explorer, terminal, lazygit, notifications |
 | Keybindings | which-key.nvim | Keybinding hints on leader press |
 | Diagnostics | trouble.nvim | Diagnostic and reference panel |
-| Treesitter | nvim-treesitter | Syntax highlighting, folding, textobjects |
+| Treesitter | built into neovim | Syntax highlighting and folding; parsers and queries supplied by nix |
 | Markdown | render-markdown.nvim | In-buffer markdown rendering |
 | Comments | ts-comments.nvim | Treesitter-aware commenting |
 | TODO | todo-comments.nvim | Highlight and navigate TODO/FIXME/HACK |

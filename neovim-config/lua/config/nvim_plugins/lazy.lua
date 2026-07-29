@@ -21,7 +21,6 @@ local lazyOptions = {
 			"mfussenegger",
 			"nvim-lua",
 			"nvim-lualine",
-			"nvim-treesitter",
 			"rose-pine",
 			"rafamadriz",
 			"saghen",
@@ -157,9 +156,6 @@ require("lazy").setup({
 
 	-- trouble configuration
 	{ import = "config.nvim_plugins.trouble" },
-
-	-- nvim-treesitter configuration
-	{ import = "config.nvim_plugins.nvim-treesitter" },
 
 	-- render-markdown configuration
 	{ import = "config.nvim_plugins.render-markdown" },

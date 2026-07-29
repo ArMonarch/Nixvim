@@ -59,6 +59,29 @@ map("n", "<leader>uI", function()
 	vim.api.nvim_input("I")
 end, { desc = "Inspect Tree" })
 
+-- treesitter incremental selection
+--
+-- neovim 0.12 ships this natively as |v_an| |v_in| |v_]n| |v_[n| |v_]N| |v_[N|, but
+-- those are visual mode textobjects, so the selection has to be started first. these
+-- keymaps drive `vim.treesitter.select()` directly to keep the old bindings working
+-- from normal mode as well. `get_parser` returns `nil, errmsg` rather than raising
+-- when the buffer has no parser, so bail out on a falsy return.
+local function select_node(target)
+	return function()
+		local ok, parser = pcall(vim.treesitter.get_parser, 0)
+		if not ok or not parser then
+			return
+		end
+
+		vim.treesitter.select(target, vim.v.count1)
+	end
+end
+
+map({ "n", "x" }, "<C-space>", select_node("parent"), { desc = "Increment Selection" })
+map("x", "<bs>", select_node("child"), { desc = "Decrement Selection" })
+map("x", "<C-n>", select_node("extend_next"), { desc = "Extend Selection To Next Node" })
+map("x", "<C-p>", select_node("extend_prev"), { desc = "Extend Selection To Prev Node" })
+
 -- location list
 map("n", "<leader>xl", function()
 	local success, err = pcall(vim.fn.getloclist(0, { winid = 0 }).winid ~= 0 and vim.cmd.lclose or vim.cmd.lopen)
