@@ -171,6 +171,6 @@ require("lazy").setup({
 }, lazyOptions)
 
 -- set colorscheme
-vim.cmd.colorscheme("tokyonight-moon")
+vim.cmd.colorscheme("rose-pine-main")
 -- load netrw file explorer as lazy.nvim disables it
 vim.cmd.packadd("netrw")
