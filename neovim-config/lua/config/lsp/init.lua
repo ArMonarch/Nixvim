@@ -40,6 +40,8 @@ require("config.lsp.jdtls")
 require("config.lsp.ols")
 -- import the configuration for rust-analyzer
 require("config.lsp.rust-analyzer")
+-- import the configuration for slang language server
+require("config.lsp.slangd")
 -- import the configuration for texlab
 require("config.lsp.texlab")
 -- import the configuration for typesscript language server
