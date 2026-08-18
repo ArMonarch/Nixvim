@@ -67,4 +67,17 @@ vim.opt.foldenable = true
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 
+-- persistent undo
+-- undo history is written to `stdpath("state")/undo`, which `NVIM_APPNAME=nixvim`
+-- already isolates to ~/.local/state/nixvim, so it will not collide with another
+-- neovim config. without this `<leader>su` (undo history picker) can only ever see
+-- the current session.
+vim.opt.undofile = true
+vim.opt.undolevels = 10000
+
+-- border used by every floating window that does not ask for one explicitly,
+-- e.g. lsp hover, diagnostic floats, and plugin popups. set once here instead of
+-- being passed per call site.
+vim.opt.winborder = "single"
+
 -- disable luarocks

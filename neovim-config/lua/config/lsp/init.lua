@@ -11,6 +11,43 @@ vim.lsp.enable("nixd")
 -- Enable Inlay Hints
 vim.lsp.inlay_hint.enable(true)
 
+-- floating window geometry, scaled to the current window and clamped so a float
+-- stays readable inside a narrow split without swallowing a large monitor.
+-- evaluated per call rather than once at startup so it follows terminal resizes:
+-- `vim.diagnostic.config()` accepts a function for `float` and calls it when the
+-- float is actually opened.
+local function float_size()
+	return {
+		max_width = math.min(120, math.max(80, math.floor(vim.o.columns * 0.6))),
+		max_height = math.min(30, math.max(10, math.floor(vim.o.lines * 0.4))),
+	}
+end
+
+-- diagnostics
+--
+-- neovim ships with both `virtual_text` and `virtual_lines` off, so a diagnostic is
+-- nothing but a sign and an underline until it is opened with `<leader>cd`. render
+-- the whole message under the cursor line instead -- `current_line = true` keeps
+-- every other line quiet. `severity_sort` stops a hint from masking an error in the
+-- sign column, and `source = "if_many"` names the server in the float, which matters
+-- for nix where nixd and nil_ls both attach to the same buffer.
+-- the sign glyphs mirror the ones in config/nvim_plugins/lualine.lua.
+vim.diagnostic.config({
+	severity_sort = true,
+	virtual_lines = { current_line = true },
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = " ",
+			[vim.diagnostic.severity.WARN] = " ",
+			[vim.diagnostic.severity.HINT] = " ",
+			[vim.diagnostic.severity.INFO] = " ",
+		},
+	},
+	float = function()
+		return vim.tbl_extend("error", float_size(), { source = "if_many" })
+	end,
+})
+
 --  This function gets run when an LSP attaches to a particular buffer.
 vim.api.nvim_create_autocmd({ "LspAttach" }, {
 	group = vim.api.nvim_create_augroup("buf-lsp-attach", { clear = true }),
@@ -21,11 +58,7 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
 
 		-- lsp keymaps
 		map({ "n" }, "K", function()
-			vim.lsp.buf.hover({
-				border = "single",
-				max_height = 15,
-				max_width = 80,
-			})
+			vim.lsp.buf.hover(float_size())
 		end, "Code Hover")
 
 		-- the default `grn` / `gra` / `grx` mappings are deleted in config/keymaps.lua

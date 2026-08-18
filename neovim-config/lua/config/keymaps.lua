@@ -112,21 +112,10 @@ local diagnostic_goto = function(next, severity)
 	end
 end
 
-map("n", "<C-w>d", function()
-	vim.diagnostic.open_float({
-		border = "single",
-		max_height = 15,
-		max_width = 80,
-	})
-end, { desc = "Line Diagnostics", remap = true })
-
-map("n", "<leader>cd", function()
-	vim.diagnostic.open_float({
-		border = "single",
-		max_height = 15,
-		max_width = 80,
-	})
-end, { desc = "Line Diagnostics" })
+-- float geometry comes from `vim.diagnostic.config({ float = ... })` in
+-- config/lsp/init.lua, and the border from 'winborder' in config/options.lua.
+map("n", "<C-w>d", vim.diagnostic.open_float, { desc = "Line Diagnostics", remap = true })
+map("n", "<leader>cd", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
 map("n", "]d", diagnostic_goto(true), { desc = "Next Diagnostic" })
 map("n", "[d", diagnostic_goto(false), { desc = "Prev Diagnostic" })
 map("n", "]e", diagnostic_goto(true, "ERROR"), { desc = "Next Error" })
