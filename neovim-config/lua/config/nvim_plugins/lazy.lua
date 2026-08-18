@@ -14,6 +14,7 @@ local lazyOptions = {
 			"folke",
 			"iamcco",
 			"lewis6991",
+			"MagicDuck",
 			"MeanderingProgrammer",
 			"MeanderingProgrammer",
 			"MunifTanjim",
@@ -105,8 +106,14 @@ require("lazy").setup({
 	--friendly snippets cinfiguration
 	{ import = "config.nvim_plugins.friendly-snippets" },
 
+	-- flash.nvim motion configuration
+	{ import = "config.nvim_plugins.flash" },
+
 	-- gitsigns.nvim configuration
 	{ import = "config.nvim_plugins.gitsigns" },
+
+	-- grug-far.nvim search & replace configuration
+	{ import = "config.nvim_plugins.grug-far" },
 
 	-- lazy.dev configuration
 	{ import = "config.nvim_plugins.lazydev" },
@@ -122,6 +129,9 @@ require("lazy").setup({
 
 	-- mini-pairs configuration
 	{ import = "config.nvim_plugins.mini-pairs" },
+
+	-- mini-surround configuration
+	{ import = "config.nvim_plugins.mini-surround" },
 
 	-- snacks.nvim configuration
 	{ import = "config.nvim_plugins.snacks" },

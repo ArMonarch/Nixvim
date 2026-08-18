@@ -48,6 +48,9 @@ nix run .#nixvim
 | Utilities | snacks.nvim | File picker, explorer, terminal, lazygit, notifications |
 | Keybindings | which-key.nvim | Keybinding hints on leader press |
 | Diagnostics | trouble.nvim | Diagnostic and reference panel |
+| Motion | flash.nvim | Jump-to-label motions, treesitter-aware selection |
+| Surround | mini.surround | Add / delete / replace surrounding pairs |
+| Search & Replace | grug-far.nvim | Project-wide find and replace with live preview |
 | Treesitter | built into neovim | Syntax highlighting and folding; parsers and queries supplied by nix |
 | Markdown | render-markdown.nvim | In-buffer markdown rendering |
 | Comments | ts-comments.nvim | Treesitter-aware commenting |
@@ -103,6 +106,16 @@ Leader key: `Space`
 | `<A-j/k>` | Move lines up / down |
 | `<C-s>` | Save file |
 | `j` / `k` | Move by display lines |
+| `s` | Flash jump (normal / visual / operator) |
+| `S` | Flash treesitter select |
+| `r` | Remote flash (operator-pending) |
+| `R` | Treesitter search (operator / visual) |
+| `<C-s>` | Toggle flash while searching (command mode) |
+| `gsa` | Add surrounding (normal / visual) |
+| `gsd` | Delete surrounding |
+| `gsr` | Replace surrounding |
+| `gsf` / `gsF` | Find surrounding right / left |
+| `gsh` | Highlight surrounding |
 
 </details>
 
@@ -120,6 +133,7 @@ Leader key: `Space`
 | `<leader>se` | Explorer |
 | `<leader>ss` | LSP symbols |
 | `<leader>sd` | Diagnostics |
+| `<leader>sR` | Search and replace (grug-far) |
 
 </details>
 

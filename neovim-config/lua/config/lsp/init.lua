@@ -18,8 +18,8 @@ vim.lsp.inlay_hint.enable(true)
 -- float is actually opened.
 local function float_size()
 	return {
-		max_width = math.min(120, math.max(80, math.floor(vim.o.columns * 0.6))),
-		max_height = math.min(30, math.max(10, math.floor(vim.o.lines * 0.4))),
+		max_width = math.min(120, math.max(80, math.floor(vim.o.columns * 0.4))),
+		max_height = math.min(30, math.max(10, math.floor(vim.o.lines * 0.6))),
 	}
 end
 

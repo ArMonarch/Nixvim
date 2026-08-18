@@ -18,8 +18,10 @@
 
     blink-cmp
     conform-nvim
+    flash-nvim
     friendly-snippets
     gitsigns-nvim
+    grug-far-nvim
     lazydev-nvim
     lualine-nvim
     noice-nvim
@@ -27,6 +29,7 @@
     nui-nvim # <- noice-nvim
     mini-icons
     mini-pairs
+    mini-surround
     plenary-nvim
     render-markdown-nvim
     markdown-preview-nvim
