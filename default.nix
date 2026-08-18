@@ -14,8 +14,6 @@
   ];
 
   neovim-optPlugins = with pkgs.vimPlugins; [
-    tokyonight-nvim
-    catppuccin-nvim
     rose-pine
 
     blink-cmp

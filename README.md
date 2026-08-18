@@ -54,7 +54,7 @@ nix run .#nixvim
 | TODO | todo-comments.nvim | Highlight and navigate TODO/FIXME/HACK |
 | Pairs | mini.pairs | Auto-pairing brackets and quotes |
 | Cursor | smear-cursor.nvim | Smooth cursor animation |
-| Colorschemes | tokyonight, catppuccin, rose-pine | |
+| Colorscheme | rose-pine | Default: `rose-pine-main` |
 
 ### LSP Servers
 

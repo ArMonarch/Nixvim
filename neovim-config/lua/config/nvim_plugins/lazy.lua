@@ -10,7 +10,6 @@ local lazyOptions = {
 		path = neovim_plugins or nil,
 		patterns = {
 			"bwpge",
-			"catppuccin",
 			"echasnovski",
 			"folke",
 			"iamcco",
@@ -89,24 +88,6 @@ require("lazy").setup({
 		name = "plenary.nvim",
 		lazy = false,
 	},
-	{
-		"folke/tokyonight.nvim",
-		name = "tokyonight.nvim",
-		lazy = false,
-		priority = 1000,
-		opts = { transparent = neovim_transparent_theme == "1" and true or false },
-	},
-
-	{
-		"catppuccin/nvim",
-		name = "catppuccin-nvim",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			require("catppuccin").setup({ transparent_background = neovim_transparent_theme == "1" and true })
-		end,
-	},
-
 	{
 		"rose-pine/neovim",
 		name = "rose-pine",
