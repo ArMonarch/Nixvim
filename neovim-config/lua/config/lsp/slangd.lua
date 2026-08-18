@@ -35,7 +35,7 @@ local run_slangd = function()
 	if vim.fn.executable("slangd") == 0 then
 		vim.notify(
 			"The language server `slangd` is either not installed, missing from PATH, or not executable.",
-			"error"
+			vim.log.levels.ERROR
 		)
 		return
 	end
