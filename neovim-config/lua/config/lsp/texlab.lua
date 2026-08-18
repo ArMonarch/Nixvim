@@ -191,7 +191,7 @@ local run_texlab = function()
 	if vim.fn.executable("texlab") == 0 then
 		vim.notify(
 			"The language server `texlab` is either not installed, missing from PATH, or not executable.",
-			"error"
+			vim.log.levels.ERROR
 		)
 		return
 	end

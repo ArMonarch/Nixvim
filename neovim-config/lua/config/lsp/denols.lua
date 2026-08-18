@@ -135,7 +135,10 @@ vim.lsp.config("denols", denols_config)
 local run_deno_lsp = function()
 	-- check if deno language server is installed or in path
 	if vim.fn.executable("deno") == 0 then
-		vim.notify("The language server `deno` is either not installed, missing from PATH, or not executable.", "error")
+		vim.notify(
+			"The language server `deno` is either not installed, missing from PATH, or not executable.",
+			vim.log.levels.ERROR
+		)
 		return
 	end
 
@@ -143,6 +146,8 @@ local run_deno_lsp = function()
 	if vim.lsp.get_clients({ name = "denols" })[1] then
 		return
 	end
+
+	vim.lsp.enable("denols")
 end
 
 -- setup typescript-language-server to run with autocommand on FileType

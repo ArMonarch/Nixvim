@@ -22,7 +22,7 @@
 --- https://github.com/rust-lang/rust-analyzer/blob/eb5da56d839ae0a9e9f50774fa3eb78eb0964550/docs/dev/lsp-extensions.md?plain=1#L26.
 
 local function reload_workspace(bufnr)
-	local clients = vim.lsp.get_clients({ bufnr = bufnr, name = "rust_analyzer" })
+	local clients = vim.lsp.get_clients({ bufnr = bufnr, name = "rust-analyzer" })
 	for _, client in ipairs(clients) do
 		vim.notify("Reloading Cargo Workspace")
 		---@diagnostic disable-next-line:param-type-mismatch
@@ -46,7 +46,7 @@ local function is_library(fname)
 
 	for _, item in ipairs({ toolchains, registry, git_registry }) do
 		if vim.fs.relpath(item, fname) then
-			local clients = vim.lsp.get_clients({ name = "rust_analyzer" })
+			local clients = vim.lsp.get_clients({ name = "rust-analyzer" })
 			return #clients > 0 and clients[#clients].config.root_dir or nil
 		end
 	end
@@ -99,7 +99,12 @@ local rust_analyzer_config = {
 			else
 				vim.schedule(function()
 					vim.notify(
-						("[rust_analyzer] cmd failed with code %d: %s\n%s"):format(output.code, cmd, output.stderr)
+						("[rust_analyzer] cmd failed with code %d: %s\n%s"):format(
+							output.code,
+							table.concat(cmd, " "),
+							output.stderr
+						),
+						vim.log.levels.ERROR
 					)
 				end)
 			end
@@ -173,7 +178,7 @@ local run_rust_analyser = function()
 	if vim.fn.executable("rust-analyzer") == 0 then
 		vim.notify(
 			"The language server `rust-analyzer` is either not installed, missing from PATH, or not executable.",
-			"error"
+			vim.log.levels.ERROR
 		)
 		return
 	end
@@ -182,7 +187,7 @@ local run_rust_analyser = function()
 	if vim.fn.executable("cargo") == 0 then
 		vim.notify(
 			"The language server `rust-analyzer` requires `cargo` which is either not installed, missing from PATH, or not executable.",
-			"error"
+			vim.log.levels.ERROR
 		)
 		return
 	end
@@ -191,7 +196,7 @@ local run_rust_analyser = function()
 	if vim.fn.executable("rustc") == 0 then
 		vim.notify(
 			"The language server `rust-analyzer` requires `rustc` which is either not installed, missing from PATH, or not executable.",
-			"error"
+			vim.log.levels.ERROR
 		)
 		return
 	end

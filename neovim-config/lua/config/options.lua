@@ -2,7 +2,7 @@
 -- See `:help mapleader`
 -- NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = " "
-vim.g.localleader = " "
+vim.g.maplocalleader = " "
 
 -- Set to true if Nerd Font is installed and selected in the terminal
 vim.g.have_nerd_font = true

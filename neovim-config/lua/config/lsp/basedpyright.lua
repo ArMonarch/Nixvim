@@ -77,7 +77,7 @@ local run_basedpyright = function()
 	if vim.fn.executable("basedpyright") == 0 then
 		vim.notify(
 			"The language server `basedpyright` is either not installed, missing from PATH, or not executable.",
-			"error"
+			vim.log.levels.ERROR
 		)
 		return
 	end

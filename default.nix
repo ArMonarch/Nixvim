@@ -112,6 +112,8 @@ in
     binName = baseNameOf exePath;
     runtimeInputs = with pkgs; [
       # Packages that plugins depends on
+      ripgrep # <- snacks.nvim picker (grep)
+      fd # <- snacks.nvim picker (files)
       lazygit # <- snacks.nvim
       gh # <- snacks.nvim
       imagemagick

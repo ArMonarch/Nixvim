@@ -163,7 +163,7 @@ local run_typescript_language_server = function()
 	if vim.fn.executable("typescript-language-server") == 0 then
 		vim.notify(
 			"The language server `typescript-language-server` is either not installed, missing from PATH, or not executable.",
-			"error"
+			vim.log.levels.ERROR
 		)
 		return
 	end

@@ -16,7 +16,10 @@ vim.lsp.config("ols", ols_config)
 local run_ols = function()
 	-- check if ols is installed or in path
 	if vim.fn.executable("ols") == 0 then
-		vim.notify("The language server `ols` is either not installed, missing from PATH, or not executable.", "error")
+		vim.notify(
+			"The language server `ols` is either not installed, missing from PATH, or not executable.",
+			vim.log.levels.ERROR
+		)
 		return
 	end
 
@@ -24,7 +27,7 @@ local run_ols = function()
 	if vim.fn.executable("odin") == 0 then
 		vim.notify(
 			"The language server `odin language server` requires `odin` which is either not installed, missing from PATH, or not executable.",
-			"error"
+			vim.log.levels.ERROR
 		)
 		return
 	end

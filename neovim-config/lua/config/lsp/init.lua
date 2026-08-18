@@ -14,9 +14,9 @@ vim.lsp.inlay_hint.enable(true)
 --  This function gets run when an LSP attaches to a particular buffer.
 vim.api.nvim_create_autocmd({ "LspAttach" }, {
 	group = vim.api.nvim_create_augroup("buf-lsp-attach", { clear = true }),
-	callback = function()
+	callback = function(event)
 		local map = function(mode, keys, func, desc)
-			vim.keymap.set(mode, keys, func, { desc = desc })
+			vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = desc })
 		end
 
 		-- lsp keymaps
@@ -27,6 +27,13 @@ vim.api.nvim_create_autocmd({ "LspAttach" }, {
 				max_width = 80,
 			})
 		end, "Code Hover")
+
+		-- the default `grn` / `gra` / `grx` mappings are deleted in config/keymaps.lua
+		-- so that `gr` (references) fires without waiting on 'timeoutlen', so rename,
+		-- code action and codelens are re-bound here under the `<leader>c` group.
+		map({ "n" }, "<leader>cr", vim.lsp.buf.rename, "Rename Symbol")
+		map({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, "Code Action")
+		map({ "n" }, "<leader>cc", vim.lsp.codelens.run, "Run Codelens")
 	end,
 })
 

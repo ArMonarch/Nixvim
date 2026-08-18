@@ -18,7 +18,10 @@ vim.lsp.config("zls", zls_config)
 local run_zls = function()
 	-- check if zig language server is installed or in path
 	if vim.fn.executable("zls") == 0 then
-		vim.notify("The language server `zls` is either not installed, missing from PATH, or not executable.", "error")
+		vim.notify(
+			"The language server `zls` is either not installed, missing from PATH, or not executable.",
+			vim.log.levels.ERROR
+		)
 		return
 	end
 
@@ -26,7 +29,7 @@ local run_zls = function()
 	if vim.fn.executable("zig") == 0 then
 		vim.notify(
 			"The language server `zls` requires `zig which is either not installed, missing from PATH, or not executable.",
-			"error"
+			vim.log.levels.ERROR
 		)
 		return
 	end

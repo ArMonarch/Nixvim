@@ -37,7 +37,7 @@ local run_jdtls = function()
 	if vim.fn.executable("jdtls") == 0 then
 		vim.notify(
 			"The language server `jdtls` is either not installed, missing from PATH, or not executable.",
-			"error"
+			vim.log.levels.ERROR
 		)
 		return
 	end

@@ -135,13 +135,18 @@ map("n", "]w", diagnostic_goto(true, "WARN"), { desc = "Next Warning" })
 map("n", "[w", diagnostic_goto(false, "WARN"), { desc = "Prev Warning" })
 
 -- Delete Keymaps
--- commenting
-vim.keymap.del("n", "gc")
+--
+-- `gr` is remapped to LSP references (see config/nvim_plugins/snacks.lua), so every
+-- default `gr*` mapping is removed to stop `gr` from waiting out 'timeoutlen'.
+-- `nowait` cannot do this: it only takes effect on buffer-local mappings.
+-- rename / code action / codelens are re-bound under `<leader>c` on LspAttach,
+-- see config/lsp/init.lua.
 vim.keymap.del("n", "gra")
 vim.keymap.del("n", "grn")
 vim.keymap.del("n", "gri")
 vim.keymap.del("n", "grr")
 vim.keymap.del("n", "grt")
+vim.keymap.del("n", "grx")
 
 -- toggle options
 if vim.lsp.inlay_hint then

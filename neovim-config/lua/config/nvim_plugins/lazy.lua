@@ -35,10 +35,10 @@ local lazyOptions = {
 	},
 	performance = {
 		cache = { enabled = true },
-		reset_pathpath = true,
-		rpt = {
+		reset_packpath = true,
+		rtp = {
 			reset = true,
-			disable_plugins = {
+			disabled_plugins = {
 				"gzip",
 				"matchit",
 				"matchparen",
