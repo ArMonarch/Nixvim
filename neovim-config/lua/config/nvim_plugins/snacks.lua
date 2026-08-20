@@ -28,6 +28,18 @@ return {
 		picker = {
 			enabled = true,
 			layout = { preset = "telescope" },
+			sources = {
+				-- the explorer source defaults to `layout = { preset = "sidebar" }`, which puts
+				-- the tree on the left. the nested `layout.layout.position` is the sidebar's
+				-- own position, not the preset.
+				--
+				-- `hidden` shows dotfiles. gitignored files are the separate `ignored` option;
+				-- `H` and `I` still toggle either one inside the explorer window.
+				explorer = {
+					layout = { layout = { position = "right" } },
+					hidden = true,
+				},
+			},
 		},
 		notifier = { enabled = true },
 		quickfile = { enabled = true },
@@ -35,6 +47,10 @@ return {
 		scroll = { enabled = false },
 		statuscolumn = { enabled = true },
 		terminal = {
+			-- resolved off the wrapper's PATH, which `runtimeInputs` in default.nix pins to
+			-- the nix fish. only the snacks terminal changes: `vim.o.shell` stays POSIX so
+			-- `:!`, `system()` and friends keep working.
+			shell = "fish",
 			win = {
 				keys = {
 					nav_h = { "<C-h>", term_nav("h"), desc = "Go to Left Window", expr = true, mode = "t" },
@@ -130,6 +146,13 @@ return {
 		{	"<leader>E", function() Snacks.explorer() end, desc = "Explorer (cwd)" },
 		{	"<leader>fe", function() Snacks.explorer({ cwd = Snacks.git.get_root() }) end, desc = "File Explorer (root dir)" },
 		{	"<leader>fE", function() Snacks.explorer() end, desc = "File Explorer (cwd)" },
+
+		-- snacks terminal keymaps
+		--
+		-- `Snacks.terminal.open` picks `position = cmd and "float" or "bottom"`, so a plain
+		-- shell terminal is a bottom split unless the float is asked for explicitly.
+		-- `<esc><esc>` leaves terminal mode, `q` hides the window (snacks "terminal" style).
+		{ "<leader>tt", function() Snacks.terminal.toggle(nil, { win = { position = "float" } }) end, desc = "Terminal (float)", mode = { "n", "t" } },
 
 		-- snacks notifications keymaps
 		{	"<leader>nh", function() Snacks.notifier.show_history() end, desc = "Notification History" },

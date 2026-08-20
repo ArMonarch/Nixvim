@@ -117,6 +117,7 @@ in
       fd # <- snacks.nvim picker (files)
       lazygit # <- snacks.nvim
       gh # <- snacks.nvim
+      fish # <- snacks.nvim terminal shell
       imagemagick
 
       # LSP Servers Packages
